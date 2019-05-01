@@ -1,5 +1,5 @@
 from application import db
-from application.core.models import User, UserAdmin
+from application.core.models import User, AdminUser
 
 
 def is_user_exists(user_id: int):
@@ -40,12 +40,12 @@ def get_user_by_id(user_id: int):
     return User.query.get(user_id)
 
 
-def get_admin_user_by_email(email: str) -> UserAdmin:
-    return UserAdmin.query.filter(UserAdmin.email == email).first()
+def get_admin_user_by_email(email: str) -> AdminUser:
+    return AdminUser.query.filter(AdminUser.email == email).first()
 
 
-def get_admin_user_by_id(id: int) -> UserAdmin:
-    return UserAdmin.query.get(id)
+def get_admin_user_by_id(id: int) -> AdminUser:
+    return AdminUser.query.get(id)
 
 
 def is_user_registered(user_id):
@@ -60,7 +60,7 @@ def get_user_language(user_id: int):
     return user.language
 
 
-def set_user_admin_password(user: UserAdmin, password: str):
+def set_user_admin_password(user: AdminUser, password: str):
     user.set_password(password)
     db.session.commit()
 
