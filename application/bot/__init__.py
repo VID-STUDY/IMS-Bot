@@ -1,5 +1,5 @@
 from application import telegram_bot
-from application.config import Config
+from config import Config
 from application.core import userservice
 from application.resources import strings, keyboards
 from flask import Blueprint, request, abort
