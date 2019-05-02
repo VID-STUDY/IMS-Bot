@@ -3,7 +3,7 @@ from application.core.models import Call
 from . import userservice
 
 
-def _get_current_user_call(user_id: int):
+def _get_current_user_call(user_id: int) -> Call:
     """
     Return current not confirmed user's call
     :param user_id: User's Telegram-ID
@@ -49,4 +49,15 @@ def set_call_time(user_id: int, time: str):
     """
     current_call = _get_current_user_call(user_id)
     current_call.time = time
+    db.session.commit()
+
+
+def confirm_call_order(user_id):
+    """
+    Confirm the user's current call order
+    :param user_id: User's Telegram-ID
+    :return: void
+    """
+    current_call = _get_current_user_call(user_id)
+    current_call.confirmed = True
     db.session.commit()
