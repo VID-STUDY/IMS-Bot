@@ -4,6 +4,9 @@ from flask_login import UserMixin
 
 
 class User(db.Model):
+    """
+    Model for users in bot
+    """
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -15,6 +18,9 @@ class User(db.Model):
 
 
 class AdminUser(db.Model, UserMixin):
+    """
+    Model for users in administration panel
+    """
     __tablename__ = 'admin_users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), index=True)
@@ -28,6 +34,9 @@ class AdminUser(db.Model, UserMixin):
 
 
 class Call(db.Model):
+    """
+    Model for call orders
+    """
     __tablename__ = 'calls'
     id = db.Column(db.Integer, primary_key=True)
     phone_number = db.Column(db.String(15))
@@ -37,6 +46,9 @@ class Call(db.Model):
 
 
 class TVChannel(db.Model):
+    """
+    Model for TV channels
+    """
     __tablename__ = 'tv_channels'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -44,6 +56,9 @@ class TVChannel(db.Model):
 
 
 class PriceFile(db.Model):
+    """
+    Model for prices in files
+    """
     __tablename__ = 'price_files'
     id = db.Column(db.Integer, primary_key=True)
     telegram_id = db.Column(db.String)
@@ -52,6 +67,9 @@ class PriceFile(db.Model):
 
 
 class AdCampaign(db.Model):
+    """
+    Model for advertising campaigns
+    """
     __tablename__ = 'ad_campaigns'
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(150))
