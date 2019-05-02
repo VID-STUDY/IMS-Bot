@@ -18,8 +18,13 @@ _keyboards_ru['welcome.language'] = _welcome_language
 _welcome_phone_number_ru = ReplyKeyboardMarkup(resize_keyboard=True)
 _welcome_phone_number_ru.add(KeyboardButton(get_string('my_number'), request_contact=True))
 _keyboards_ru['welcome.phone_number'] = _welcome_phone_number_ru
-_main_menu_ru = ReplyKeyboardMarkup(resize_keyboard=True)
-_main_menu_ru.add(get_string('main_menu.settings'))
+_main_menu_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+_main_menu_ru.add(get_string('main_menu.ad_campaign'),
+                  get_string('main_menu.calls'),
+                  get_string('main_menu.prices'),
+                  get_string('main_menu.rating'),
+                  get_string('main_menu.faq'),
+                  get_string('main_menu.settings'))
 _keyboards_ru['main_menu'] = _main_menu_ru
 _settings_ru = ReplyKeyboardMarkup(resize_keyboard=True)
 _settings_ru.add(get_string('settings.change_user_name'), get_string('settings.change_phone_number'))
