@@ -11,6 +11,7 @@ class User(db.Model):
     phone_number = db.Column(db.String(15))
     language = db.Column(db.String(5))
     company_name = db.Column(db.String)
+    calls = db.relationship('Call', lazy='dynamic', backref='user')
 
 
 class AdminUser(db.Model, UserMixin):
@@ -31,6 +32,8 @@ class Call(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     phone_number = db.Column(db.String(15))
     time = db.Column(db.String(50))
+    confirmed = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 class TVChannel(db.Model):
