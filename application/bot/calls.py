@@ -47,7 +47,7 @@ def phone_number_processor(message: Message):
     language = userservice.get_user_language(user_id)
 
     def error():
-        error_msg = strings.get_string('calls.number_error', language)
+        error_msg = strings.get_string('calls.number', language)
         bot.send_message(chat_id, error_msg, parse_mode='HTML')
         bot.register_next_step_handler_by_chat_id(chat_id, phone_number_processor)
 
@@ -69,7 +69,7 @@ def phone_number_processor(message: Message):
     time_message = strings.get_string('call.time', language)
     time_keyboard = keyboards.get_keyboard('call.time', language)
     bot.send_message(chat_id, time_message, reply_markup=time_keyboard)
-    bot.register_next_step_handler_by_chat_id(chat_id)
+    bot.register_next_step_handler_by_chat_id(chat_id, call_time_processor)
 
 
 def call_time_processor(message: Message):
@@ -78,7 +78,7 @@ def call_time_processor(message: Message):
     language = userservice.get_user_language(user_id)
 
     def error():
-        error_msg = strings.get_string('call.time_error', language)
+        error_msg = strings.get_string('call.time', language)
         bot.send_message(chat_id, error_msg)
         bot.register_next_step_handler_by_chat_id(chat_id, call_time_processor)
 
