@@ -36,7 +36,7 @@ def set_user_company(user_id: int, company_name: str):
     db.session.commit()
 
 
-def get_user_by_id(user_id: int):
+def get_user_by_id(user_id: int) -> User:
     return User.query.get(user_id)
 
 
