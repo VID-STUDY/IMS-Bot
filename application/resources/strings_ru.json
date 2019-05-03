@@ -11,7 +11,8 @@
     "main_menu.settings": "⚙ Настройки",
     "main_menu.calls": "☎️ Заказать звонок",
     "main_menu.ad_campaign": "Рекламная компания",
-    "main_menu.prices": "Прайс-листы (Пакетное предложение)",
+    "main_menu.prices": "Прайс-листы",
+    "main_menu.package_offers": "Пакетные предложения",
     "main_menu.rating": "⭐️ Рейтинги",
     "main_menu.faq": "❓ Частые вопросы",
     "main_menu.choose_option": "Выберите пункт меню.",
@@ -36,5 +37,7 @@
     "prices.empty": "Цены для каналов ещё не установлены",
     "ratings.ratings_for_date": "Рейтинг каналов за",
     "ratings.empty": "Рейтинги ещё не установлены",
+    "package_offers.channel": "Выберите канал. Будет отправлен файл в PDF формате",
+    "package_offers.empty": "Пакеты для каналов ещё не установлены",
     "go_back": "⬅ Назад"
 }
