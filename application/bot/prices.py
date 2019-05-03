@@ -57,7 +57,7 @@ def channel_processor(message: Message):
             if price_file.telegram_id:
                 bot.send_document(chat_id, price_file.telegram_id)
             else:
-                bot.send_chat_action('')
+                bot.send_chat_action('upload_document')
                 file = open(price_file.file_path, 'rb')
                 sent_file = bot.send_document(chat_id, file)
                 tg_id = sent_file.document.file_id
