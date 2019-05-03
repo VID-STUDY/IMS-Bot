@@ -121,3 +121,6 @@ dmypy.json
 
 #VS Code cache
 .vscode/
+
+# App Data
+data/
