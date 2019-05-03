@@ -124,3 +124,6 @@ dmypy.json
 
 # App Data
 data/
+
+# Frontend project
+frontend/
