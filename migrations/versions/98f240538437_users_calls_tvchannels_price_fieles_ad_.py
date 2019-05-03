@@ -36,6 +36,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('phone_number', sa.String(length=15), nullable=True),
     sa.Column('time', sa.String(length=50), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('tv_channels',
