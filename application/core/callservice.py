@@ -70,7 +70,10 @@ def get_all_confirmed_calls() -> list:
     Get all confirmed calls
     :return: list of application.core.models.Call
     """
-    return Call.query.filter(Call.confirmed == True).all()
+    return Call.query\
+        .filter(Call.confirmed == True)\
+        .order_by(Call.confirmation_date.desc())\
+        .all()
 
 
 def remove_call(call_id: int):
