@@ -11,7 +11,7 @@ _keyboards_uz = {
 _default_value = ReplyKeyboardMarkup(resize_keyboard=True)
 _default_value.add('no_keyboard')
 
-# Инициализация клавиатур с русским языком
+# Initialization russian keyboards
 _welcome_language = ReplyKeyboardMarkup(resize_keyboard=True)
 _welcome_language.add(get_string('language.russian'), get_string('language.uzbek'))
 _keyboards_ru['welcome.language'] = _welcome_language
@@ -43,8 +43,16 @@ _settings_choose_language_ru.add(get_string('language.russian'))
 _settings_choose_language_ru.add(get_string('language.uzbek'))
 _settings_choose_language_ru.add(get_string('go_back'))
 _keyboards_ru['settings.choose_language'] = _settings_choose_language_ru
-
-#Инициализация узбекских клавиатур
+_call_number_keyboard_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+_call_number_keyboard_ru.add(KeyboardButton(get_string('my_number'), request_contact=True),
+                             get_string('go_back'))
+_keyboards_ru['call.number'] = _call_number_keyboard_ru
+_call_time_keyboard_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_call_time_keyboard_ru.add(get_string('call.in_5_minutes'),
+                           get_string('call.in_10_minutes'),
+                           get_string('go_back'))
+_keyboards_ru['call.time'] = _call_time_keyboard_ru
+# Initialization uzbek keybords
 _welcome_phone_number_uz = ReplyKeyboardMarkup(resize_keyboard=True)
 _welcome_phone_number_uz.add(KeyboardButton(get_string('my_number', 'uz'), request_contact=True))
 _keyboards_uz['welcome.phone_number'] = _welcome_phone_number_uz
