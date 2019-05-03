@@ -21,7 +21,15 @@ login.login_view = 'auth.login'
 login.login_message = 'Для входа в систему необходима регистрация.'
 login.login_message_category = 'error'
 
-import application.core.models
+import application.core.models as models
+
+
+@app.shell_context_processor
+def shell_context():
+    return {
+        'TvChannel': models.TVChannel
+    }
+
 
 from application.bot import bp as bot_bp
 app.register_blueprint(bot_bp)
