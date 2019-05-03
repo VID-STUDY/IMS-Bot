@@ -82,6 +82,13 @@ class AdCampaign(db.Model):
         MALE_AND_FEMALE = 'male_and_female'
 
 
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    text_ru = db.Column(db.String)
+    text_uz = db.Column(db.String)
+
+
 @login.user_loader
 def load_user(user_id):
     return AdminUser.query.get(int(user_id))
