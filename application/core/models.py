@@ -90,6 +90,12 @@ class Rating(db.Model):
     text_uz = db.Column(db.String)
 
 
+class FAQ(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text_ru = db.Column(db.Stirng)
+    text_uz = db.Column(db.String)
+
+
 @login.user_loader
 def load_user(user_id):
     return AdminUser.query.get(int(user_id))

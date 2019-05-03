@@ -1,6 +1,6 @@
 import os
 import json
-from application.core.models import Rating
+from application.core.models import Rating, FAQ
 
 _basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -26,3 +26,10 @@ def from_rating(rating: Rating, language) -> str:
     return template.format(msg=get_string('ratings.ratings_for_date', language),
                            date=rating.date.strftime('%d:%m:%Y'),
                            text=text)
+
+
+def from_faq(faq: FAQ, language: str) -> str:
+    if language == 'uz':
+        return faq.text_uz
+    else:
+        return faq.text_ru
