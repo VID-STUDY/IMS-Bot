@@ -24,7 +24,7 @@ def from_rating(rating: Rating, language) -> str:
     else:
         text = rating.text_ru
     return template.format(msg=get_string('ratings.ratings_for_date', language),
-                           date=rating.date.strftime('%d:%m:%Y'),
+                           date=rating.date.strftime('%d.%m.%Y'),
                            text=text)
 
 
