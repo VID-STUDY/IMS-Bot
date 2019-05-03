@@ -64,6 +64,7 @@ class PriceFile(db.Model):
     telegram_id = db.Column(db.String)
     file_path = db.Column(db.String)
     channel_id = db.Column(db.Integer, db.ForeignKey('tv_channels.id'))
+    is_package = db.Column(db.Boolean, default=False)
 
 
 class AdCampaign(db.Model):
