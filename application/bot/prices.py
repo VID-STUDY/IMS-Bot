@@ -21,7 +21,7 @@ def prices(message: Message):
     user_id = message.from_user.id
     language = userservice.get_user_language(user_id)
 
-    channel_message = strings.get_string('prices.choose_channel', language)
+    channel_message = strings.get_string('prices.channel', language)
     channels_keyboard = keyboards.from_channels(channelservice.get_all_channels())
     bot.send_message(chat_id, channel_message, reply_markup=channels_keyboard)
     bot.register_next_step_handler_by_chat_id(chat_id, channel_processor)
@@ -33,7 +33,7 @@ def channel_processor(message: Message):
     language = userservice.get_user_language(user_id)
 
     def error():
-        error_message = strings.get_string('prices.choose_channel', language)
+        error_message = strings.get_string('prices.channel', language)
         bot.send_message(chat_id, error_message)
         bot.register_next_step_handler_by_chat_id(chat_id, channel_processor)
 
