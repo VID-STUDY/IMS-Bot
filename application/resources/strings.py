@@ -1,5 +1,6 @@
 import os
 import json
+from application.core.models import Rating
 
 _basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -14,3 +15,14 @@ def get_string(key, language='ru'):
         return _strings_uz.get(key, 'no_string')
     else:
         raise Exception('Invalid language')
+
+
+def from_rating(rating: Rating, language) -> str:
+    template = "{msg} {date}\n\n{text}"
+    if language == 'uz':
+        text = rating.text_uz
+    else:
+        text = rating.text_ru
+    return template.format(msg=get_string('ratings.ratings_for_date', language),
+                           date=rating.date.strftime('%d:%m:%Y'),
+                           text=text)
