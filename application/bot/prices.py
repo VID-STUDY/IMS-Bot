@@ -14,7 +14,7 @@ def check_auth(message: Message):
     return userservice.is_user_registered(message.from_user.id)
 
 
-@bot.message_handler(commands=['/prices'])
+@bot.message_handler(commands=['prices'])
 @bot.message_handler(content_types=['text'], func=lambda m: check_auth(m) and check_prices(m))
 def prices(message: Message):
     chat_id = message.chat.id
@@ -49,6 +49,7 @@ def channel_processor(message: Message):
         main_menu_message = strings.get_string('main_menu.choose_option', language)
         main_menu_keyboard = keyboards.get_keyboard('main_menu', language)
         bot.send_message(chat_id, main_menu_message, reply_markup=main_menu_keyboard)
+        return
     try:
         price_files = channelservice.get_prices_by_channel(message.text)
     except channelservice.ChannelNotFound:
