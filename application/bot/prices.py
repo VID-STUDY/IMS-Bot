@@ -22,7 +22,12 @@ def prices(message: Message):
     language = userservice.get_user_language(user_id)
 
     channel_message = strings.get_string('prices.channel', language)
-    channels_keyboard = keyboards.from_channels(channelservice.get_all_channels())
+    channels = channelservice.get_channels_only_with_price_files()
+    if len(channels) == 0:
+        empty_msg = strings.get_string('prices.empty', language)
+        bot.send_message(chat_id, empty_msg)
+        return
+    channels_keyboard = keyboards.from_channels(channelservice.get_channels_only_with_price_files())
     bot.send_message(chat_id, channel_message, reply_markup=channels_keyboard)
     bot.register_next_step_handler_by_chat_id(chat_id, channel_processor)
 
@@ -49,17 +54,13 @@ def channel_processor(message: Message):
     except channelservice.ChannelNotFound:
         error()
         return
-    if len(price_files) == 0:
-        empty_message = strings.get_string('prices.empty', language)
-        bot.send_message(chat_id, empty_message)
-    else:
-        for price_file in price_files:
-            if price_file.telegram_id:
-                bot.send_document(chat_id, price_file.telegram_id)
-            else:
-                bot.send_chat_action('upload_document')
-                file = open(price_file.file_path, 'rb')
-                sent_file = bot.send_document(chat_id, file)
-                tg_id = sent_file.document.file_id
-                channelservice.set_telegram_id_for_price_file(price_file.id, tg_id)
+    for price_file in price_files:
+        if price_file.telegram_id:
+            bot.send_document(chat_id, price_file.telegram_id)
+        else:
+            bot.send_chat_action('upload_document')
+            file = open(price_file.file_path, 'rb')
+            sent_file = bot.send_document(chat_id, file)
+            tg_id = sent_file.document.file_id
+            channelservice.set_telegram_id_for_price_file(price_file.id, tg_id)
     bot.register_next_step_handler_by_chat_id(chat_id, channel_processor)
