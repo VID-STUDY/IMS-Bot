@@ -92,7 +92,7 @@ class Rating(db.Model):
 
 class FAQ(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    text_ru = db.Column(db.Stirng)
+    text_ru = db.Column(db.String)
     text_uz = db.Column(db.String)
 
 
