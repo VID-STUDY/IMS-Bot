@@ -1,2 +1,1 @@
-let sidenav = document.querySelectorAll('.sidenav');
-M.Sidenav.init(sidenav);
+document.addEventListener("DOMContentLoaded",()=>{let e=document.querySelectorAll(".sidenav");M.Sidenav.init(e)});
