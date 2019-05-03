@@ -27,7 +27,7 @@ def prices(message: Message):
         empty_msg = strings.get_string('prices.empty', language)
         bot.send_message(chat_id, empty_msg)
         return
-    channels_keyboard = keyboards.from_channels(channelservice.get_channels_only_with_price_files())
+    channels_keyboard = keyboards.from_channels(channels, language)
     bot.send_message(chat_id, channel_message, reply_markup=channels_keyboard)
     bot.register_next_step_handler_by_chat_id(chat_id, channel_processor)
 
@@ -59,7 +59,7 @@ def channel_processor(message: Message):
         if price_file.telegram_id:
             bot.send_document(chat_id, price_file.telegram_id)
         else:
-            bot.send_chat_action('upload_document')
+            bot.send_chat_action(chat_id, 'upload_document')
             file = open(price_file.file_path, 'rb')
             sent_file = bot.send_document(chat_id, file)
             tg_id = sent_file.document.file_id

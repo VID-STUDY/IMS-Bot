@@ -27,7 +27,7 @@ def package_offers_handler(message: Message):
         bot.send_message(chat_id, empty_msg)
         return
     channel_message = strings.get_string('package_offers.channel', language)
-    channels_keyboard = keyboards.from_channels(channels)
+    channels_keyboard = keyboards.from_channels(channels, language)
     bot.send_message(chat_id, channel_message, reply_markup=channels_keyboard)
     bot.register_next_step_handler_by_chat_id(chat_id, channel_processor)
 
@@ -59,7 +59,7 @@ def channel_processor(message: Message):
         if package_offer.telegram_id:
             bot.send_document(chat_id, package_offer.telegram_id)
         else:
-            bot.send_chat_action('upload_document')
+            bot.send_chat_action(chat_id, 'upload_document')
             file = open(package_offer.file_path, 'rb')
             sent_file = bot.send_document(chat_id, file)
             tg_id = sent_file.document.file_id

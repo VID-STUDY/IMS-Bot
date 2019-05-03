@@ -89,7 +89,8 @@ def get_keyboard(key, language='ru'):
         raise Exception('Invalid language')
 
 
-def from_channels(channels: list) -> ReplyKeyboardMarkup:
+def from_channels(channels: list, language: str) -> ReplyKeyboardMarkup:
     channels_keyboard = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     channels_keyboard.add(*[channel.name for channel in channels])
+    channels_keyboard.add(get_string('go_back', language))
     return channels_keyboard
