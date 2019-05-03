@@ -1,6 +1,7 @@
 from application import db
 from application.core.models import Call
 from . import userservice
+from datetime import datetime
 
 
 def _get_current_user_call(user_id: int) -> Call:
@@ -60,4 +61,24 @@ def confirm_call_order(user_id):
     """
     current_call = _get_current_user_call(user_id)
     current_call.confirmed = True
+    current_call.confirmation_date = datetime.utcnow()
+    db.session.commit()
+
+
+def get_all_confirmed_calls() -> list:
+    """
+    Get all confirmed calls
+    :return: list of application.core.models.Call
+    """
+    return Call.query.filter(Call.confirmed == True).all()
+
+
+def remove_call(call_id: int):
+    """
+    Delete call by its id
+    :param call_id: Call's id
+    :return: void
+    """
+    call = Call.query.get_or_404(call_id)
+    db.session.delete(call)
     db.session.commit()
