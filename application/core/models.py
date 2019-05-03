@@ -43,6 +43,7 @@ class Call(db.Model):
     time = db.Column(db.String(50))
     confirmed = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    confirmation_date = db.Column(db.DateTime)
 
 
 class TVChannel(db.Model):
