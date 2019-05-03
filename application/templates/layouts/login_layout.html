@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <title>{% if title %} {{ title }} {% else %} Вход в систему {% endif %} - SMM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <title>{% if title %} {{ title }} {% else %} Вход в систему {% endif %} - ISM</title>
 </head>
-<body>
+<body style="background-image: url('{{ url_for('static', filename='img/flat-bg.jpg') }}')">
 <div class="form-page">
     <div class="form-wrapper">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -25,11 +25,11 @@
                 </div>
             {% endif %}
         {% endwith %}
-        <div class="form-hello">
-            <h1>SMM</h1>
-            <p>Вход в систему</p>
-        </div>
         <div class="form-panel card-panel">
+            <div class="form-hello">
+                <h4>International Media Service</h4>
+                <p>Вход в систему</p>
+            </div>
             {% block content %}
             {% endblock %}
         </div>
