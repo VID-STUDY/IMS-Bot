@@ -1,7 +1,7 @@
 from application.admin import bp
 from application.core import callservice
 from flask_login import login_required
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 
 
 @bp.route('/calls', methods=['GET', 'HEAD'])
@@ -15,4 +15,5 @@ def calls():
 @login_required
 def delete_call(call_id: int):
     callservice.remove_call(call_id)
+    flash('Заказ на вызов удалён', category='success')
     return redirect(url_for('admin.calls'))

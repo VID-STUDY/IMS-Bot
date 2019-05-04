@@ -49,4 +49,5 @@ def new_channel():
 @bp.route('/channel/<int:channel_id>/delete', methods=['POST'])
 def delete_channel(channel_id: int):
     channelservice.remove_channel(channel_id)
+    flash('Канал удалён', category='success')
     return redirect(url_for('admin.channels'))
