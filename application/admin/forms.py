@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, MultipleFileField, ValidationError
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, MultipleFileField, ValidationError, TextAreaField
+from wtforms.validators import DataRequired, Length
 from flask_wtf.file import FileAllowed
 from application.core.models import TVChannel
 
@@ -20,3 +20,24 @@ class ChannelForm(FlaskForm):
     def validate_name(self, name: StringField):
         if TVChannel.query.filter(TVChannel.name == name.data).count() > 0:
             raise ValidationError('Канал с таким именем уже существует')
+
+
+class RatingForm(FlaskForm):
+    date = StringField('Рейтинг за', validators=[DataRequired('Установите дату')])
+    text_ru = TextAreaField('Текст на русском',
+                            validators=[DataRequired('Укажите текст на русском'),
+                                        Length(max=3000, message='Длина должна быть не больше 3000 символов')])
+    text_uz = TextAreaField('Текст на узбекском',
+                            validators=[DataRequired('Укажите текст на узбекском'),
+                                        Length(max=3000, message='Длина должна быть не больше 3000 символов')])
+    submit = SubmitField('Сохранить')
+
+
+class FaqForm(FlaskForm):
+    text_ru = TextAreaField('Текст на русском',
+                            validators=[DataRequired('Укажите текст на русском'),
+                                        Length(max=3000, message='Длина должна быть не больше 3000 символов')])
+    text_uz = TextAreaField('Текст на узбекском',
+                            validators=[DataRequired('Укажите текст на узбекском'),
+                                        Length(max=3000, message='Длина должна быть не больше 3000 символов')])
+    submit = SubmitField('Сохранить')
