@@ -19,6 +19,9 @@ def concrete_channel(channel_id: int):
     if channel_form.validate_on_submit():
         price_files = request.files.getlist('price_files')
         package_offers_files = request.files.getlist('package_offers_files')
+        if price_files or package_offers_files:
+            flash('Рекомендуется перейти в бота и запросить у него новые файлы, '
+                  'чтобы в последующем он отправлял их быстрее', category='warning')
         name = channel_form.name.data
         channelservice.update_channel(channel_id, name, price_files, package_offers_files)
         flash('Канал {} успешно изменён'.format(channel_form.name.data), category='success')
