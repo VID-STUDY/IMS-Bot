@@ -1,7 +1,6 @@
 from application import telegram_bot as bot
-from application.core.models import FAQ
 from application.resources import strings
-from application.core import userservice
+from application.core import userservice, faqservice
 from telebot.types import Message
 
 
@@ -22,9 +21,8 @@ def faq_handler(message: Message):
     user_id = message.from_user.id
     language = userservice.get_user_language(user_id)
 
-    try:
-        faq = FAQ.query.all()[0]
-    except IndexError:
+    faq = faqservice.get_faq()
+    if not faq:
         empty_msg = strings.get_string('faq.empty', language)
         bot.send_message(chat_id, empty_msg)
         return
