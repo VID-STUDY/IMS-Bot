@@ -21,4 +21,4 @@ def ratings():
         rating_form.date.data = rating.date.strftime('%d.%m.%Y')
         rating_form.text_ru.data = rating.text_ru
         rating_form.text_uz.data = rating.text_uz
-    return render_template('admin/rating.html', title='Рейтинги', form=rating_form)
+    return render_template('admin/rating.html', title='Рейтинги', form=rating_form, area='ratings')

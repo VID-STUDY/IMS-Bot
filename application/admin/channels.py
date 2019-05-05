@@ -9,11 +9,11 @@ from .forms import ChannelForm
 @bp.route('/channels', methods=['GET', 'HEAD'])
 def all_channels():
     channels = channelservice.get_all_channels()
-    return render_template('admin/channels.html', title='ТВ-каналы', channels=channels)
+    return render_template('admin/channels.html', title='ТВ-каналы', channels=channels, area='channels')
 
 
 @login_required
-@bp.route('/channel/<int:channel_id>', method=['GET', 'HEAD', 'POST'])
+@bp.route('/channel/<int:channel_id>', methods=['GET', 'HEAD', 'POST'])
 def concrete_channel(channel_id: int):
     channel_form = ChannelForm()
     if channel_form.validate_on_submit():
@@ -31,7 +31,8 @@ def concrete_channel(channel_id: int):
     return render_template('admin/channel.html',
                            title='Канал {}'.format(channel.name),
                            form=channel_form,
-                           channel=channel)
+                           channel=channel,
+                           area='channels')
 
 
 @login_required
@@ -45,7 +46,7 @@ def new_channel():
         channelservice.create_channel(name, price_files, package_offers_files)
         flash('Канал {} успешно создан!'.format(channel_form.name.data), category='success')
         return redirect(url_for('admin.channels'))
-    return render_template('admin/new_channel.html', title='Новый канал', form=channel_form)
+    return render_template('admin/new_channel.html', title='Новый канал', form=channel_form, area='channels')
 
 
 @login_required

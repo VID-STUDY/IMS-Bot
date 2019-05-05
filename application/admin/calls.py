@@ -8,7 +8,7 @@ from flask import render_template, redirect, url_for, flash
 @login_required
 def calls():
     confirmed_calls = callservice.get_all_confirmed_calls()
-    return render_template('admin/calls.html', calls=confirmed_calls, title="Заказы звонков")
+    return render_template('admin/calls.html', calls=confirmed_calls, title="Заказы звонков", area='calls')
 
 
 @bp.route('/call/<int:call_id>/delete', methods=['GET', 'HEAD'])

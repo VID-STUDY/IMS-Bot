@@ -19,4 +19,4 @@ def faq():
     if current_faq:
         form.text_ru.data = current_faq.text_ru
         form.text_uz.data = current_faq.text_uz
-    return render_template('admin/faq.html',form=form, title='FAQ')
+    return render_template('admin/faq.html', form=form, title='FAQ', area='faq')

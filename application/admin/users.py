@@ -8,4 +8,4 @@ from flask import render_template
 @login_required
 def users():
     all_users = userservice.get_all_bot_users()
-    return render_template('admin/users.html', title='Пользователи Telegram-bot', users=all_users)
+    return render_template('admin/users.html', title='Пользователи Telegram-bot', users=all_users, area='users')
