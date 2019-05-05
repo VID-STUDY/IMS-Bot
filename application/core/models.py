@@ -53,7 +53,7 @@ class TVChannel(db.Model):
     __tablename__ = 'tv_channels'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    price_files = db.relationship('PriceFile', lazy='dynamic')
+    price_files = db.relationship('PriceFile', lazy='dynamic', cascade='all,delete')
 
 
 class PriceFile(db.Model):
