@@ -98,27 +98,31 @@ def update_channel(channel_id: int, name=None, price_files=None, package_offers_
     if name:
         channel.name = name
     if price_files:
-        current_prices = channel.price_files.filter(PriceFile.is_package == False).all()
-        map(db.session.delete, current_prices)
-        for file in price_files:
-            if file.filename == '':
-                continue
-            file_path = os.path.join(Config.UPLOAD_DIRECTORY, secure_filename(file.filename))
-            tools.save_file(file, file_path, recreate=True)
-            new_price = PriceFile(file_path=file_path, is_package=False)
-            channel.price_files.append(new_price)
-            db.session.add(new_price)
+        if not price_files[0].content_type == 'application/octet-stream':
+            current_prices = channel.price_files.filter(PriceFile.is_package == False).all()
+            for price_file in current_prices:
+                db.session.delete(price_file)
+            for file in price_files:
+                if file.filename == '':
+                    continue
+                file_path = os.path.join(Config.UPLOAD_DIRECTORY, secure_filename(file.filename))
+                tools.save_file(file, file_path, recreate=True)
+                new_price = PriceFile(file_path=file_path, is_package=False)
+                channel.price_files.append(new_price)
+                db.session.add(new_price)
     if package_offers_files:
-        current_package_offers = channel.price_files.filter(PriceFile.is_package == True).all()
-        map(db.session.delete, current_package_offers)
-        for file in package_offers_files:
-            if file.filename == '':
-                continue
-            file_path = os.path.join(Config.UPLOAD_DIRECTORY, secure_filename(file.filename))
-            tools.save_file(file, file_path, recreate=True)
-            new_package_offer = PriceFile(file_path=file_path, is_package=True)
-            channel.price_files.append(new_package_offer)
-            db.session.add(new_package_offer)
+        if not package_offers_files[0].content_type == 'application/octet-stream':
+            current_package_offers = channel.price_files.filter(PriceFile.is_package == True).all()
+            for offer in current_package_offers:
+                db.session.delete(offer)
+            for file in package_offers_files:
+                if file.filename == '':
+                    continue
+                file_path = os.path.join(Config.UPLOAD_DIRECTORY, secure_filename(file.filename))
+                tools.save_file(file, file_path, recreate=True)
+                new_package_offer = PriceFile(file_path=file_path, is_package=True)
+                channel.price_files.append(new_package_offer)
+                db.session.add(new_package_offer)
     db.session.commit()
 
 
@@ -148,7 +152,7 @@ def create_channel(name: str, price_files=None, package_offers_files=None):
             file_path = os.path.join(Config.UPLOAD_DIRECTORY, secure_filename(file.filename))
             tools.save_file(file, file_path, recreate=True)
             new_package_offer = PriceFile(file_path=file_path, is_package=True)
-            channel.price_files.add(new_package_offer)
+            channel.price_files.append(new_package_offer)
             db.session.add(new_package_offer)
     db.session.commit()
 
@@ -160,6 +164,8 @@ def remove_channel(channel_id: int):
     :return: void
     """
     channel = TVChannel.query.get_or_404(channel_id)
+    for file in channel.price_files.all():
+        tools.remove_file(file.file_path)
     db.session.delete(channel)
     db.session.commit()
 
