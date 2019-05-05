@@ -15,7 +15,10 @@
 <header>
     <nav class="top-nav">
         <div class="nav-wrapper">
-            <a href="{{ url_for('admin.index') }}" class="brand-logo center"><i class="material-icons">dashboard</i>SMM</a>
+            <a href="{{ url_for('admin.index') }}" class="brand-logo center"><i class="material-icons">dashboard</i>
+                <span class="hide-on-small-and-down">International Media Service</span>
+                <span class="hide-on-med-and-up">IMS</span>
+            </a>
         </div>
     </nav>
     <a href="#" class="sidenav-trigger hide-on-large-only" data-target="nav-mobile">
@@ -27,24 +30,41 @@
                 <a href="#email"><span class="black-text email">{{ current_user.email }}</span></a>
             </div>
         </li>
-        <li><a href="{{ url_for('admin.users') }}" class="waves-effect waves-red"><i class="material-icons">people</i>Пользователи</a></li>
+        <li {% if area == 'users' %} class="active" {% endif %}><a href="{{ url_for('admin.users') }}" class="waves-effect waves-purple"><i class="material-icons">people</i>Пользователи</a></li>
+        <li {% if area == 'calls' %} class="active" {% endif %}><a href="{{ url_for('admin.calls') }}" class="waves-effect waves-purple"><i class="material-icons">ring_volume</i>Звонки</a></li>
+        <li {% if area == 'channels' %} class="active" {% endif %}><a href="{{ url_for('admin.all_channels') }}" class="waves-effect waves-purple"><i class="material-icons">dvr</i>Каналы</a></li>
+        <li {% if area == 'ratings' %} class="active" {% endif %}><a href="{{ url_for('admin.ratings') }}" class="waves-effect waves-purple"><i class="material-icons">assessment</i>Рейтинги</a></li>
+        <li {% if area == 'faq' %} class="active" {% endif %}><a href="{{ url_for('admin.faq') }}" class="waves-effect waves-purple"><i class="material-icons">help_outline</i>FAQ</a></li>
         <li><div class="divider"></div></li>
-        <li><a href="{{ url_for('auth.logout') }}" class="waves-effect waves-red"><i class="material-icons">exit_to_app</i>Выйти</a></li>
+        <li><a href="{{ url_for('auth.logout') }}" class="waves-effect waves-purple"><i class="material-icons">exit_to_app</i>Выйти</a></li>
     </ul>
 </header>
 <main>
+    <div class="content-wrapper-before"></div>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="alerts content">
                 {% for category, message in messages %}
                     <div class="alert {{ category }}">
-                        <p class="content">{{ message }}</p>
+                        <p class="content">
+                                <i class="material-icons left">
+                                    {% if category == 'success' %}
+                                        check_circle_outline
+                                    {% elif category == 'error' %}
+                                        error_outline
+                                    {% elif category == 'warning' %}
+                                        warning
+                                    {% else %}
+                                        notifications
+                                    {% endif %}
+                                </i> {{ message }}
+                            </p>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
     {% endwith %}
-    <div class="content card-panel">
+    <div class="content">
         {% block content %}
         {% endblock %}
     </div>

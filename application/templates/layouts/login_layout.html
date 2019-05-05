@@ -19,7 +19,19 @@
                 <div class="alerts">
                    {% for category, message in messages %}
                         <div class="alert {{ category }}">
-                            <p class="content">{{ message }}</p>
+                            <p class="content">
+                                <i class="material-icons left">
+                                    {% if category == 'success' %}
+                                        check_circle_outline
+                                    {% elif category == 'error' %}
+                                        error_outline
+                                    {% elif category == 'warning' %}
+                                        warning
+                                    {% else %}
+                                        notifications
+                                    {% endif %}
+                                </i> {{ message }}
+                            </p>
                        </div>
                     {% endfor %}
                 </div>
@@ -28,7 +40,6 @@
         <div class="form-panel card-panel">
             <div class="form-hello">
                 <h4>International Media Service</h4>
-                <p>Вход в систему</p>
             </div>
             {% block content %}
             {% endblock %}

@@ -1,62 +1,68 @@
 {% extends 'layouts/admin_layout.html' %}
 
 {% block content %}
-    <h3 class="content-header">Пользователи Telegram-bot</h3>
-    <div class="row">
-        <div class="col l4">
-            <div class="input-field">
-                <i class="material-icons prefix">search</i>
-                <input type="text" name="userSearch" id="userSearch">
-                <label for="userSearch">Поиск пользователя по имени</label>
+    <div class="card-panel">
+        <h3 class="content-header">Пользователи Telegram-bot</h3>
+        <div class="row">
+            <div class="col l4">
+                <div class="input-field">
+                    <i class="material-icons prefix">search</i>
+                    <input type="text" name="userSearch" id="userSearch">
+                    <label for="userSearch">Поиск пользователя по имени</label>
+                </div>
             </div>
         </div>
     </div>
-    <table class="highlight striped responsive-table centered" id="userTable">
-        <thead>
-            <tr>
-                <th>Telegram-ID</th>
-                <th>Имя</th>
-                <th>Юзернэйм</th>
-                <th>Номер телефона</th>
-                <th>Название компании</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>
-                        {% if user.name %}
-                            {{ user.name }}
-                        {% else %}
-                            Не указано
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if user.username %}
-                            {{ user.username }}
-                        {% else %}
-                            Не указано
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if user.phone_number %}
-                            {{ user.phone_number }}
-                        {% else %}
-                            Не указано
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if user.company_name %}
-                            {{ user.company_name }}
-                        {% else %}
-                            Не указано
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="card-panel">
+        <div class="table-wrapper">
+            <table class="highlight striped centered" id="userTable">
+                <thead>
+                    <tr>
+                        <th>Telegram-ID</th>
+                        <th>Имя</th>
+                        <th>Юзернэйм</th>
+                        <th>Номер телефона</th>
+                        <th>Название компании</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>
+                                {% if user.name %}
+                                    {{ user.name }}
+                                {% else %}
+                                    Не указано
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.username %}
+                                    {{ user.username }}
+                                {% else %}
+                                    Не указано
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.phone_number %}
+                                    {{ user.phone_number }}
+                                {% else %}
+                                    Не указано
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.company_name %}
+                                    {{ user.company_name }}
+                                {% else %}
+                                    Не указано
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
