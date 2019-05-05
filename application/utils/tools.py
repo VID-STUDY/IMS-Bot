@@ -25,3 +25,8 @@ def save_file(file, path, recreate=False):
         else:
             raise FileExistsError()
     file.save(path)
+
+
+def remove_file(path):
+    if os.path.exists(path):
+        os.remove(path)
