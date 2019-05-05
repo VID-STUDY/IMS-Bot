@@ -1,0 +1,36 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+    <div class="card-panel">
+        <h3 class="content-header">Рейтинги каналов</h3>
+        <p class="content-caption">Редактирование рейтингов. Для стилизации текста используйте следующие обозначения: *<b>Полужирный</b>*, _<i>курсивный</i>_</p>
+        <section class="faq-form">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="input-field">
+                    {{ form.date(class='datepicker') }}
+                    {{ form.date.label }}
+                    {% for error in form.date.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="input-field">
+                    {{ form.text_ru(class='materialize-textarea') }}
+                    {{ form.text_ru.label }}
+                    {% for error in form.text_ru.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="input-field">
+                    {{ form.text_uz(class='materialize-textarea') }}
+                    {{ form.text_uz.label }}
+                    {% for error in form.text_uz.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-button">
+                    {{ form.submit(class='btn waves-effect waves-light') }}
+                </div>
+            </form>
+        </section>
+    </div>
+{% endblock %}
