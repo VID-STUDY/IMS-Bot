@@ -38,19 +38,15 @@ class NewChannelForm(FlaskForm):
 class RatingForm(FlaskForm):
     date = StringField('Рейтинг за', validators=[DataRequired('Установите дату')])
     text_ru = TextAreaField('Текст на русском',
-                            validators=[DataRequired('Укажите текст на русском'),
-                                        Length(max=3000, message='Длина должна быть не больше 3000 символов')])
+                            validators=[DataRequired('Укажите текст на русском')])
     text_uz = TextAreaField('Текст на узбекском',
-                            validators=[DataRequired('Укажите текст на узбекском'),
-                                        Length(max=3000, message='Длина должна быть не больше 3000 символов')])
+                            validators=[DataRequired('Укажите текст на узбекском')])
     submit = SubmitField('Сохранить')
 
 
 class FaqForm(FlaskForm):
     text_ru = TextAreaField('Текст на русском',
-                            validators=[DataRequired('Укажите текст на русском'),
-                                        Length(max=3000, message='Длина должна быть не больше 3000 символов')])
+                            validators=[DataRequired('Укажите текст на русском')])
     text_uz = TextAreaField('Текст на узбекском',
-                            validators=[DataRequired('Укажите текст на узбекском'),
-                                        Length(max=3000, message='Длина должна быть не больше 3000 символов')])
+                            validators=[DataRequired('Укажите текст на узбекском')])
     submit = SubmitField('Сохранить')
