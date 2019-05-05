@@ -2,7 +2,7 @@ from application.admin import bp
 from application.core import channelservice
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required
-from .forms import ChannelForm
+from .forms import ChannelForm, NewChannelForm
 
 
 @login_required
@@ -38,7 +38,7 @@ def concrete_channel(channel_id: int):
 @login_required
 @bp.route('/channel/new', methods=['GET', 'HEAD', 'POST'])
 def new_channel():
-    channel_form = ChannelForm()
+    channel_form = NewChannelForm()
     if channel_form.validate_on_submit():
         price_files = request.files.getlist('price_files')
         package_offers_files = request.files.getlist('package_offers_files')
@@ -53,7 +53,7 @@ def new_channel():
 
 
 @login_required
-@bp.route('/channel/<int:channel_id>/delete', methods=['POST'])
+@bp.route('/channel/<int:channel_id>/delete', methods=['GET'])
 def delete_channel(channel_id: int):
     channelservice.remove_channel(channel_id)
     flash('Канал удалён', category='success')

@@ -17,6 +17,19 @@ class ChannelForm(FlaskForm):
                                                                              "документов")])
     submit = SubmitField('Сохранить')
 
+
+class NewChannelForm(FlaskForm):
+    name = StringField('Название канала', validators=[DataRequired('Имя обзательно')])
+    price_files = MultipleFileField('Файлы прайсов',
+                                    validators=[FileAllowed(['jpg', 'png', 'pdf', 'doc', 'docx'],
+                                                            message="Только файлы изображений или "
+                                                                    "документов")])
+    package_offers_files = MultipleFileField('Файлы пакетных предложений',
+                                             validators=[FileAllowed(['jpg', 'png', 'pdf', 'doc', 'docx'],
+                                                                     message="Только файлы изображений или "
+                                                                             "документов")])
+    submit = SubmitField('Сохранить')
+
     def validate_name(self, name: StringField):
         if TVChannel.query.filter(TVChannel.name == name.data).count() > 0:
             raise ValidationError('Канал с таким именем уже существует')
