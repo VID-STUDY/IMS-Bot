@@ -1,0 +1,23 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+    <div class="fixed-action-btn">
+        <a href="{{ url_for('admin.new_channel') }}" class="btn-floating btn-large primary-gradient">
+            <i class="material-icons large">add</i>
+        </a>
+    </div>
+    <div class="card-panel">
+        <h3 class="content-header">Телеканалы</h3>
+        <p class="content-caption">Управление телеканалами: редактирование названия, прайс-листов и пакетных предложений</p>
+        <section class="channels-list">
+            <div class="collection">
+                {% for channel in channels %}
+                    <a href="{{ url_for('admin.concrete_channel', channel_id=channel.id) }}" class="collection-item waves-effect waves-purple">
+                        {{ channel.name }}
+                    </a>
+                    {% else %}
+                        <li class="collection-item">Каналы отсутствуют</li>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+    <div class="fixed-action-btn">
+        <a href="#" data-target="deleteConfirmationModal" class="btn-floating btn-large primary-gradient modal-trigger">
+            <i class="material-icons large">delete</i>
+        </a>
+    </div>
+    <div class="card-panel">
+        <h3 class="content-header">Канал {{ channel.name }}</h3>
+        <p class="content-caption">Редактирование канала. <strong>Внимание!</strong> максимальный размер загружаемых файлов - 16 Мб. Загрузка файлов может быть долгая в зависимости от скорости вашего интернета, будьте терпеливы.</p>
+        <p class="content-caption"><strong>Также внимание!</strong> Если вы хотите загрузить новые прайсы или пакетные предложения, воспользуйтесь соответствующими формами, тогда старые файлы будут удалены и заменены новыми. Если нет, просто оставьте их пустыми.</p>
+        <section class="edit-channel-form">
+            <form action="" method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="input-field">
+                    {{ form.name() }}
+                    {{ form.name.label }}
+                    {% for error in form.name.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="file-field input-field">
+                    <div class="btn purple darken-4 white-text">
+                        <span>Выбрать</span>
+                        {{ form.price_files() }}
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input type="text" placeholder="Файлы прайсов" class="file-path">
+                    </div>
+                    <span class="helper-text">Разрешённые файлы: jpg, png, pdf, doc, docx</span>
+                    {% for error in form.price_files.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="file-field input-field">
+                    <div class="btn purple darken-4 white-text">
+                        <span>Выбрать</span>
+                        {{ form.package_offers_files() }}
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input type="text" placeholder="Файлы пакетных предложений" class="file-path">
+                    </div>
+                    <span class="helper-text">Разрешённые файлы: jpg, png, pdf, doc, docx</span>
+                    {% for error in form.package_offers_files.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-button">
+                    {{ form.submit(class='btn waves-effect waves-light') }}
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="modal" id="deleteConfirmationModal">
+        <div class="modal-content">
+            <h4>Подтвердите действие</h4>
+            <p>Вы действительно хотите удалить канал {{ channel.name }} и все его файлы?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="{{ url_for('admin.delete_channel', channel_id=channel.id) }}" id="confirmedDeleteButton" class="modal-close btn-flat waves-effect waves-purple"><i class="material-icons left">delete_outline</i>Удалить</a>
+            <a href="#" class="modal-close btn-flat waves-effect waves-purple">Отмена</a>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/channel.js') }}"></script>
+{% endblock %}
