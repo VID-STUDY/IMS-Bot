@@ -3,7 +3,7 @@ from flask_login import login_required
 
 bp = Blueprint('admin', __name__)
 
-from application.admin import users
+from application.admin import users, calls, channels, faq, rating
 
 
 @bp.route('/', methods=['GET', 'HEAD'])
