@@ -1,1 +1,1 @@
-document.addEventListener("DOMContentLoaded",()=>{let e=document.querySelectorAll(".sidenav");M.Sidenav.init(e)});
+document.addEventListener("DOMContentLoaded",()=>{let e=document.querySelectorAll(".sidenav");M.Sidenav.init(e);let t=document.querySelectorAll(".modals");M.Modal.init(t)});

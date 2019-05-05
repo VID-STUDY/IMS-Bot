@@ -1,0 +1,58 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+    <div class="card-panel">
+        <h3 class="content-header">Заказы звонков</h3>
+        <section class="calls-table">
+            <div class="table-wrapper">
+                <table class="highlight striped centered">
+                    <thead>
+                        <tr>
+                            <th>Имя заказчика</th>
+                            <th>Компания заказчика</th>
+                            <th>Дата заказа</th>
+                            <th>Номер телефона</th>
+                            <th>Время звонка</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for call in calls %}
+                            <tr>
+                                <td>{{ call.user.name }}</td>
+                                <td>{{ call.user.company_name }}</td>
+                                <td>{{ call.confirmation_date|datetime(convert_from_utc=True) }}</td>
+                                <td>{{ call.phone_number }}</td>
+                                <td>{{ call.time }}</td>
+                                <td>
+                                    <div class="call-actions">
+                                        <button class="btn waves-effect-waves-light purple action-delete-btn"
+                                                data-delete-url="{{ url_for('admin.delete_call', call_id=call.id) }}"
+                                                data-phone-number="{{ call.phone_xnumber }}"
+                                                data-call-date="{{ call.confirmation_date|datetime(convert_from_utc=True) }}">
+                                            <i class="material-icons white-text">delete_outline</i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% else %}
+                                <tr class="empty-table">Заказы на звонки отсутствуют</tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <div class="modal" id="deleteConfirmationModal">
+        <div class="modal-content">
+            <h4>Подтверждение</h4>
+            <p id="modalText"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="" id="confirmedDeleteButton" class="modal-close btn-flat waves-effect waves-purple"><i class="material-icons left">delete_outline</i>Удалить</a>
+            <a href="#" class="modal-close btn-flat waves-effect waves-purple">Отмена</a>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/calls.js') }}"></script>
+{% endblock %}
