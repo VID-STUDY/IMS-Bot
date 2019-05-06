@@ -53,7 +53,7 @@ def set_call_time(user_id: int, time: str):
     db.session.commit()
 
 
-def confirm_call_order(user_id):
+def confirm_call_order(user_id) -> Call:
     """
     Confirm the user's current call order
     :param user_id: User's Telegram-ID
@@ -63,6 +63,7 @@ def confirm_call_order(user_id):
     current_call.confirmed = True
     current_call.confirmation_date = datetime.utcnow()
     db.session.commit()
+    return current_call
 
 
 def get_all_confirmed_calls() -> list:
