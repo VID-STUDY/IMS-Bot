@@ -38,7 +38,7 @@ def from_faq(faq: FAQ, language: str) -> str:
 def from_notify_call(call: Call):
     template = '<b>Новый заказ звонка!</b>\n\n' \
                '<b>Имя заказчика:</b> {name}\n' \
-               '<b>Комания заказчика:</b> {company}\n' \
+               '<b>Компания заказчика:</b> {company}\n' \
                '<b>Номер телефона:</b> {phone_number}\n' \
                '<b>Время звонка:</b> {time}'
     return template.format(name=call.user.name,
