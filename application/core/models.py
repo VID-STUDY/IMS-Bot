@@ -97,6 +97,12 @@ class FAQ(db.Model):
     text_uz = db.Column(db.String)
 
 
+class NotifyChat(db.Model):
+    __tablename__ = 'notify_chats'
+    id = db.Column(db.Integer, primary_key=True)
+    chat_title = db.Column(db.String(100))
+
+
 @login.user_loader
 def load_user(user_id):
     return AdminUser.query.get(int(user_id))
