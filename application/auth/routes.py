@@ -57,7 +57,7 @@ def password(user_id: int):
     if form.validate_on_submit():
         if not user.check_password(form.password.data):
             flash('Указан неверный пароль', category='error')
-            return redirect(url_for('admin.password', user_id=user_id))
+            return redirect(url_for('auth.password', user_id=user_id))
         login_user(user)
         return redirect(url_for('admin.index'))
     return render_template('auth/password.html', title='Укажите пароль', form=form, email=user.email)
