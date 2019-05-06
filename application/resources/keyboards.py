@@ -58,8 +58,14 @@ _keyboards_ru['call.time'] = _call_time_keyboard_ru
 _welcome_phone_number_uz = ReplyKeyboardMarkup(resize_keyboard=True)
 _welcome_phone_number_uz.add(KeyboardButton(get_string('my_number', 'uz'), request_contact=True))
 _keyboards_uz['welcome.phone_number'] = _welcome_phone_number_uz
-_main_menu_uz = ReplyKeyboardMarkup(resize_keyboard=True)
-_main_menu_uz.add(get_string('main_menu.settings', 'uz'))
+_main_menu_uz = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+_main_menu_uz.add(get_string('main_menu.ad_campaign', 'uz'),
+                  get_string('main_menu.calls', 'uz'),
+                  get_string('main_menu.prices', 'uz'),
+                  get_string('main_menu.package_offers', 'uz'),
+                  get_string('main_menu.rating', 'uz'),
+                  get_string('main_menu.faq', 'uz'),
+                  get_string('main_menu.settings', 'uz'))
 _keyboards_uz['main_menu'] = _main_menu_uz
 _settings_uz = ReplyKeyboardMarkup(resize_keyboard=True)
 _settings_uz.add(get_string('settings.change_user_name', 'uz'), get_string('settings.change_phone_number', 'uz'))
@@ -74,10 +80,19 @@ _settings_change_phone_uz.add(KeyboardButton(get_string('my_number', 'uz'), requ
 _settings_change_phone_uz.add(get_string('go_back', 'uz'))
 _keyboards_uz['settings.change_phone'] = _settings_change_phone_uz
 _settings_choose_language_uz = ReplyKeyboardMarkup(resize_keyboard=True)
-_settings_choose_language_uz.add(get_string('language.russian'))
-_settings_choose_language_uz.add(get_string('language.uzbek'))
+_settings_choose_language_uz.add(get_string('language.russian', 'uz'))
+_settings_choose_language_uz.add(get_string('language.uzbek', 'uz'))
 _settings_choose_language_uz.add(get_string('go_back', 'uz'))
 _keyboards_uz['settings.choose_language'] = _settings_choose_language_uz
+_call_number_keyboard_uz = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+_call_number_keyboard_uz.add(KeyboardButton(get_string('my_number', 'uz'), request_contact=True),
+                             get_string('go_back', 'uz'))
+_keyboards_uz['call.number'] = _call_number_keyboard_uz
+_call_time_keyboard_uz = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_call_time_keyboard_uz.add(get_string('call.in_5_minutes', 'uz'),
+                           get_string('call.in_10_minutes', 'uz'),
+                           get_string('go_back', 'uz'))
+_keyboards_uz['call.time'] = _call_time_keyboard_uz
 
 
 def get_keyboard(key, language='ru'):
