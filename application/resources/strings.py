@@ -1,6 +1,6 @@
 import os
 import json
-from application.core.models import Rating, FAQ
+from application.core.models import Rating, FAQ, Call
 
 _basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -33,3 +33,15 @@ def from_faq(faq: FAQ, language: str) -> str:
         return faq.text_uz
     else:
         return faq.text_ru
+
+
+def from_notify_call(call: Call):
+    template = '<b>Новый заказ звонка!</b>\n\n' \
+               '<b>Имя заказчика:</b> {name}\n' \
+               '<b>Комания заказчика:</b> {company}\n' \
+               '<b>Номер телефона:</b> {phone_number}\n' \
+               '<b>Время звонка:</b> {time}'
+    return template.format(name=call.user.name,
+                           company=call.user.company_name,
+                           phone_number=call.phone_number,
+                           time=call.time)

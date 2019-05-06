@@ -2,10 +2,13 @@ from application import telegram_bot as bot
 from application.resources import strings, keyboards
 from application.core import callservice, userservice
 from telebot.types import Message
+from application.bot.notify import notify_call
 import re
 
 
 def check_calls(message: Message):
+    if not message.text:
+        return False
     user_id = message.from_user.id
     language = userservice.get_user_language(user_id)
     return strings.get_string('main_menu.calls', language) in message.text and message.chat.type == 'private'
@@ -89,6 +92,7 @@ def call_time_processor(message: Message):
         _to_phone_number(chat_id, language)
         return
     callservice.set_call_time(user_id, message.text)
-    callservice.confirm_call_order(user_id)
+    call = callservice.confirm_call_order(user_id)
     success_message = strings.get_string('call.success', language)
+    notify_call(call)
     _to_main_menu(chat_id, language, success_message)
