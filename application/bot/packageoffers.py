@@ -5,6 +5,8 @@ from telebot.types import Message
 
 
 def check_package_offers(message: Message):
+    if not message.text:
+        return False
     user_id = message.from_user.id
     language = userservice.get_user_language(user_id)
     return strings.get_string('main_menu.package_offers', language) in message.text and message.chat.type == 'private'

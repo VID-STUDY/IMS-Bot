@@ -6,8 +6,11 @@ import re
 
 
 def check_settings(message: Message):
+    if not message.text:
+        return False
     user_id = message.from_user.id
     language = userservice.get_user_language(user_id)
+
     return strings.get_string('main_menu.settings', language) in message.text and message.chat.type == 'private'
 
 
