@@ -15,6 +15,7 @@
     "main_menu.package_offers": "Paketlar taklifi",
     "main_menu.rating": "⭐️ Reytinglar",
     "main_menu.faq": "❓ Savollar",
+    "main_menu.law_on_ad": "\uD83D\uDCD1 Reklama qonuni",
     "main_menu.choose_option": "Menyuni tanlang",
     "settings.change_user_name": "Ismi ni o'zgartirish 👤",
     "settings.send_name": "Ismingizni yuboring",
@@ -42,6 +43,6 @@
     "faq.empty": "Savellar hali so`ralmagan",
     "notify.registration_success": "Группа зарегистрована для оповещения новых заказов на звонки и рекламные компании",
     "notify.exists": "Группа уже регистровалась ранее",
-    "notify.call_message": "",
+    "law.url": "http://lex.uz/ru/docs/25458",
     "go_back": "⬅ Orqaga"
 }

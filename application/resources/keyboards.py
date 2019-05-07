@@ -25,6 +25,7 @@ _main_menu_ru.add(get_string('main_menu.ad_campaign'),
                   get_string('main_menu.package_offers'),
                   get_string('main_menu.rating'),
                   get_string('main_menu.faq'),
+                  get_string('main_menu.law_on_ad'),
                   get_string('main_menu.settings'))
 _keyboards_ru['main_menu'] = _main_menu_ru
 _settings_ru = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -65,6 +66,7 @@ _main_menu_uz.add(get_string('main_menu.ad_campaign', 'uz'),
                   get_string('main_menu.package_offers', 'uz'),
                   get_string('main_menu.rating', 'uz'),
                   get_string('main_menu.faq', 'uz'),
+                  get_string('main_menu.law_on_ad', 'uz'),
                   get_string('main_menu.settings', 'uz'))
 _keyboards_uz['main_menu'] = _main_menu_uz
 _settings_uz = ReplyKeyboardMarkup(resize_keyboard=True)
