@@ -1,5 +1,6 @@
 from telebot.types import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
-from application.resources.strings import get_string
+from application.resources.strings import get_string, from_ages_enum_value
+from application.core.models import AdCampaign
 
 _keyboards_ru = {
     'remove': ReplyKeyboardRemove()
@@ -111,3 +112,23 @@ def from_channels(channels: list, language: str) -> ReplyKeyboardMarkup:
     channels_keyboard.add(*[channel.name for channel in channels])
     channels_keyboard.add(get_string('go_back', language))
     return channels_keyboard
+
+
+def from_ages(language:str, used_ages: str = None) -> ReplyKeyboardMarkup:
+    age_keyboard = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    if used_ages and used_ages != '':
+        user_ages = [age.strip() for age in used_ages.split(',')]
+        current_ages = [age for age in user_ages if age != '']
+        unused_ages = list(set(AdCampaign.AudienceAges.AGES) - set(current_ages))
+        unused_ages.sort()
+    else:
+        unused_ages = AdCampaign.AudienceAges.AGES
+    age_keyboard.add(*[from_ages_enum_value(value, language) for value in unused_ages])
+    if used_ages:
+        age_keyboard.add(get_string('campaign.continue', language))
+        age_keyboard.add(get_string('campaign.reset', language))
+    else:
+        age_keyboard.add('campaign.all_ages')
+    age_keyboard.add(get_string('go_back', language), get_string('main_menu', language))
+
+    return age_keyboard
