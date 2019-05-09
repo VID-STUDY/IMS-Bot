@@ -15,6 +15,7 @@ class User(db.Model):
     language = db.Column(db.String(5))
     company_name = db.Column(db.String)
     calls = db.relationship('Call', lazy='dynamic', backref='user')
+    campaigns = db.relationship('AdCampaign', lazy='dynamic', backref='user')
 
 
 class AdminUser(db.Model, UserMixin):
@@ -77,11 +78,24 @@ class AdCampaign(db.Model):
     product_name = db.Column(db.String(150))
     target_audience = db.Column(db.String)
     age_of_audience = db.Column(db.String)
+    budget = db.Column(db.String)
+    confirmed = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     class TargetAudiences:
         MALE = 'male'
         FEMALE = 'female'
         MALE_AND_FEMALE = 'male_and_female'
+
+    class BudgetOptions:
+        SMALL = "small"
+        MEDIUM = "medium"
+        LARGE = 'large'
+        VERY_LARGE = 'very_large'
+
+    class AudienceAges:
+        AGES = ['6-10', '11-17', '18-24', '25-34', '35-44', '45-54', '55_and_older']
+        ALL = 'all'
 
 
 class Rating(db.Model):
