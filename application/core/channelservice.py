@@ -1,5 +1,5 @@
 from application import db
-from application.core.models import TVChannel, PriceFile
+from application.core.models import TVChannel, PriceFile, ChannelPresentation
 from config import Config
 from application.utils import tools
 from werkzeug.utils import secure_filename
@@ -167,6 +167,16 @@ def remove_channel(channel_id: int):
     for file in channel.price_files.all():
         tools.remove_file(file.file_path)
     db.session.delete(channel)
+    db.session.commit()
+
+
+def get_channel_presentations():
+    return ChannelPresentation.query.all()
+
+
+def set_telegram_id_for_presentation_file(presentation_id, telegram_id):
+    presentation = ChannelPresentation.query.get(presentation_id)
+    presentation.telegram_id = telegram_id
     db.session.commit()
 
 
