@@ -50,11 +50,11 @@ def from_notify_call(call: Call):
 
 
 def to_target_audience_enum(text: str, language: str) -> Optional[AnyStr]:
-    if get_string('campaign.male', language) in text:
+    if get_string('campaign.male', language) == text:
         return AdCampaign.TargetAudiences.MALE
-    elif get_string('campaign.female', language) in text:
+    elif get_string('campaign.female', language) == text:
         return AdCampaign.TargetAudiences.FEMALE
-    elif get_string('campaign.male_and_female', language) in text:
+    elif get_string('campaign.male_and_female', language) == text:
         return AdCampaign.TargetAudiences.MALE_AND_FEMALE
     else:
         return None
