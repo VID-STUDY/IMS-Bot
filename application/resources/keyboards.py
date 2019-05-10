@@ -1,5 +1,6 @@
 from telebot.types import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
-from application.resources.strings import get_string, from_ages_enum_value
+from application.resources.strings import get_string, from_ages_enum_value, from_target_audience_enum_to_text, \
+    budget_enum_to_text
 from application.core.models import AdCampaign
 
 _keyboards_ru = {
@@ -55,6 +56,27 @@ _call_time_keyboard_ru.add(get_string('call.in_5_minutes'),
                            get_string('call.in_10_minutes'),
                            get_string('go_back'))
 _keyboards_ru['call.time'] = _call_time_keyboard_ru
+_target_audience_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_target_audience_ru.add(from_target_audience_enum_to_text(AdCampaign.TargetAudiences.MALE, 'ru'),
+                        from_target_audience_enum_to_text(AdCampaign.TargetAudiences.FEMALE, 'ru'),
+                        from_target_audience_enum_to_text(AdCampaign.TargetAudiences.MALE_AND_FEMALE, 'ru'))
+_target_audience_ru.add(get_string('go_back'), get_string('main_menu'))
+_keyboards_ru['campaign.target_audience'] = _target_audience_ru
+_budget_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_budget_ru.add(budget_enum_to_text(AdCampaign.BudgetOptions.SMALL, 'ru'))
+_budget_ru.add(budget_enum_to_text(AdCampaign.BudgetOptions.MEDIUM, 'ru'))
+_budget_ru.add(budget_enum_to_text(AdCampaign.BudgetOptions.LARGE, 'ru'))
+_budget_ru.add(budget_enum_to_text(AdCampaign.BudgetOptions.VERY_LARGE, 'ru'))
+_budget_ru.add(get_string('go_back'), get_string('main_menu'))
+_keyboards_ru['campaign.budget'] = _budget_ru
+_coverage_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_coverage_ru.add(get_string('campaign.show'))
+_coverage_ru.add(get_string('go_back'), get_string('main_menu'))
+_keyboards_ru['campaign.coverage'] = _coverage_ru
+_confirmation_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_confirmation_ru.add(get_string('campaign.confirm'))
+_confirmation_ru.add(get_string('go_back'), get_string('main_menu'))
+_keyboards_ru['campaign.confirmation'] = _confirmation_ru
 
 # Initialization uzbek keybords
 _welcome_phone_number_uz = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -117,10 +139,13 @@ def from_channels(channels: list, language: str) -> ReplyKeyboardMarkup:
 def from_ages(language:str, used_ages: str = None) -> ReplyKeyboardMarkup:
     age_keyboard = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     if used_ages and used_ages != '':
-        user_ages = [age.strip() for age in used_ages.split(',')]
-        current_ages = [age for age in user_ages if age != '']
-        unused_ages = list(set(AdCampaign.AudienceAges.AGES) - set(current_ages))
-        unused_ages.sort()
+        if used_ages != AdCampaign.AudienceAges.ALL:
+            user_ages = [age.strip() for age in used_ages.split(',')]
+            current_ages = [age for age in user_ages if age != '']
+            unused_ages = list(set(AdCampaign.AudienceAges.AGES) - set(current_ages))
+            unused_ages.sort()
+        else:
+            unused_ages = []
     else:
         unused_ages = AdCampaign.AudienceAges.AGES
     age_keyboard.add(*[from_ages_enum_value(value, language) for value in unused_ages])
@@ -128,7 +153,7 @@ def from_ages(language:str, used_ages: str = None) -> ReplyKeyboardMarkup:
         age_keyboard.add(get_string('campaign.continue', language))
         age_keyboard.add(get_string('campaign.reset', language))
     else:
-        age_keyboard.add('campaign.all_ages')
+        age_keyboard.add(from_ages_enum_value(AdCampaign.AudienceAges.ALL, language))
     age_keyboard.add(get_string('go_back', language), get_string('main_menu', language))
 
     return age_keyboard
