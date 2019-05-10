@@ -84,7 +84,10 @@ def add_age_audience(user_id: int, age: str) -> AdCampaign:
     current_campaign = get_current_campaign(user_id)
     if not current_campaign.age_of_audience:
         current_campaign.age_of_audience = ''
-    current_campaign.age_of_audience += (age + ' ')
+    if age == AdCampaign.AudienceAges.ALL:
+        current_campaign.age_of_audience = age
+    else:
+        current_campaign.age_of_audience += (age + ', ')
     db.session.commit()
     return current_campaign
 
@@ -101,20 +104,17 @@ def reset_audience_ages(user_id: int) -> AdCampaign:
     return current_campaign
 
 
-def set_budget(user_id: int, budget: str) -> Optional[Tuple[int, int]]:
+def set_budget(user_id: int, budget: str) -> AdCampaign:
     """
     Set budget for current campaign and return coverages by it
     :param user_id: User's Telegram-ID
     :param budget: value of budget
-    :return: tuple of from and to values
+    :return: Current Ad Order
     """
     current_campaign = get_current_campaign(user_id)
     current_campaign.budget = budget
     db.session.commit()
-    if budget in coverages_by_budget:
-        return coverages_by_budget[budget]
-    else:
-        return None
+    return current_campaign
 
 
 def confirm_campaign(user_id: int) -> AdCampaign:
@@ -127,3 +127,9 @@ def confirm_campaign(user_id: int) -> AdCampaign:
     current_campaign.confirmed = True
     db.session.commit()
     return current_campaign
+
+
+def get_coverages_by_budget(budget: str) -> Optional[Tuple[int, int]]:
+    if budget in coverages_by_budget:
+        return coverages_by_budget[budget]
+    return None
