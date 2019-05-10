@@ -105,6 +105,13 @@ class Rating(db.Model):
     text_uz = db.Column(db.String)
 
 
+class ChannelPresentation(db.Model):
+    __tablename__ = 'channel_presentations'
+    id = db.Column(db.Integer, primary_key=True)
+    telegram_id = db.Column(db.String)
+    file_path = db.Column(db.String)
+
+
 class FAQ(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text_ru = db.Column(db.String)
