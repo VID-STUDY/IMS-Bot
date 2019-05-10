@@ -2,6 +2,7 @@ from application import telegram_bot as bot
 from application.core import advertservice, userservice
 from application.resources import strings, keyboards
 from application.core.models import AdCampaign
+from application.bot.notify import notify_ad_campaign
 from telebot.types import Message
 
 
@@ -37,9 +38,9 @@ def _to_product_name(chat_id, language, include_keyboard=True):
 
 
 def _to_target_audience(chat_id, language, include_keyboard=True):
-    target_audience_msg = strings.get_string('campaign.campaign.target_audience', language)
+    target_audience_msg = strings.get_string('campaign.target_audience', language)
     if include_keyboard:
-        target_audience_keyboard = keyboards.get_keyboard('campaign.campaign.target_audience', language)
+        target_audience_keyboard = keyboards.get_keyboard('campaign.target_audience', language)
         bot.send_message(chat_id, target_audience_msg, reply_markup=target_audience_keyboard)
     else:
         bot.send_message(chat_id, target_audience_msg)
@@ -54,7 +55,7 @@ def _to_audience_age(chat_id, language, include_keyboard=True, current_ad_order:
         if ad_campaign.age_of_audience and ad_campaign.age_of_audience != '':
             selected_ages_template = strings.get_string('campaign.selected_ages', language)
             audience_age_msg = selected_ages_template.format(strings.format_ages(ad_campaign.age_of_audience, language))
-        bot.send_message(chat_id, audience_age_msg, reply_markup=audience_age_keyboard)
+        bot.send_message(chat_id, audience_age_msg, reply_markup=audience_age_keyboard, parse_mode='Markdown')
     else:
         bot.send_message(chat_id, audience_age_msg)
     bot.register_next_step_handler_by_chat_id(chat_id, audience_age_processor)
@@ -102,10 +103,16 @@ def target_audience_processor(message: Message):
     language = userservice.get_user_language(user_id)
 
     def error():
-        _to_target_audience(chat_id, language, include_keyboard=True)
+        _to_target_audience(chat_id, language, include_keyboard=False)
 
     if not message.text:
         error()
+    if strings.get_string('go_back', language) in message.text:
+        _to_product_name(chat_id, language)
+        return
+    elif strings.get_string('main_menu', language) in message.text:
+        _to_main_menu(chat_id, language)
+        return
     enum_value = strings.to_target_audience_enum(message.text, language)
     if not enum_value:
         error()
@@ -143,17 +150,87 @@ def audience_age_processor(message: Message):
         age = strings.to_ages_enum(message.text, language)
         if not age:
             error()
+            return
+        if age == AdCampaign.AudienceAges.ALL:
+            advertservice.add_age_audience(user_id, age)
+            _to_budget(chat_id, language)
+            return
         current_ad_order = advertservice.add_age_audience(user_id, age)
         _to_audience_age(chat_id, language, current_ad_order=current_ad_order)
 
 
 def budget_processor(message: Message):
-    pass
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    language = userservice.get_user_language(user_id)
+
+    def error():
+        _to_budget(chat_id, language, include_keyboard=False)
+
+    if not message.text:
+        error()
+        return
+    if strings.get_string('go_back', language) in message.text:
+        _to_audience_age(chat_id, language)
+    elif strings.get_string('main_menu', language) in message.text:
+        _to_main_menu(chat_id, language)
+    else:
+        budget_enum_value = strings.text_to_budget_enum(message.text, language)
+        if not budget_enum_value:
+            error()
+            return
+        coverage = advertservice.get_coverages_by_budget(budget_enum_value)
+        coverage_msg = strings.from_coverage_to_text(coverage, language)
+        coverage_keyboard = keyboards.get_keyboard('campaign.coverage', language)
+        bot.send_message(chat_id, coverage_msg, parse_mode='Markdown', reply_markup=coverage_keyboard)
+        bot.register_next_step_handler_by_chat_id(chat_id, coverage_processor, budget=budget_enum_value)
 
 
-def coverage_processor(message: Message):
-    pass
+def coverage_processor(message: Message, **kwargs):
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    language = userservice.get_user_language(user_id)
+
+    def error():
+        bot.register_next_step_handler_by_chat_id(chat_id, coverage_processor)
+
+    if not message.text:
+        error()
+        return
+    if strings.get_string('go_back', language) in message.text:
+        _to_budget(chat_id, language)
+    elif strings.get_string('main_menu', language) in message.text:
+        _to_main_menu(chat_id, language)
+    elif strings.get_string('campaign.show', language) in message.text:
+        budget = kwargs.get('budget')
+        current_ad_order = advertservice.set_budget(user_id, budget)
+        total_order_msg = strings.total_ad_order(current_ad_order, language)
+        total_order_keyboard = keyboards.get_keyboard('campaign.confirmation', language)
+        bot.send_message(chat_id, total_order_msg, parse_mode='Markdown', reply_markup=total_order_keyboard)
+        bot.register_next_step_handler_by_chat_id(chat_id, confirmation_processor)
+    else:
+        error()
 
 
 def confirmation_processor(message: Message):
-    pass
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    language = userservice.get_user_language(user_id)
+
+    def error():
+        bot.register_next_step_handler_by_chat_id(chat_id, confirmation_processor)
+
+    if not message.text:
+        error()
+        return
+    if strings.get_string('go_back', language) in message.text:
+        _to_budget(chat_id, language)
+    elif strings.get_string('main_menu', language) in message.text:
+        _to_main_menu(chat_id, language)
+    elif strings.get_string('campaign.confirm', language) in message.text:
+        current_ad_order = advertservice.confirm_campaign(user_id)
+        notify_ad_campaign(current_ad_order)
+        success_message = strings.get_string('campaign.success', language)
+        _to_main_menu(chat_id, language, success_message)
+    else:
+        error()
