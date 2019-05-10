@@ -1,6 +1,7 @@
 import os
 import json
 from application.core.models import Rating, FAQ, Call, AdCampaign
+from application.core.advertservice import get_coverages_by_budget
 from typing import Optional, AnyStr
 
 _basedir = os.path.abspath(os.path.dirname(__file__))
@@ -59,25 +60,31 @@ def to_target_audience_enum(text: str, language: str) -> Optional[AnyStr]:
         return None
 
 
+def from_target_audience_enum_to_text(value: str, language: str):
+    return get_string('campaign.' + value, language)
+
+
 def from_ages_enum_value(value: str, language) -> str:
     return get_string('ages.' + value, language)
 
 
 def to_ages_enum(text: str, language) -> Optional[AnyStr]:
     if get_string('ages.6-10', language) in text:
-        return AdCampaign.AudienceAges.ALL[0]
+        return AdCampaign.AudienceAges.AGES[0]
     elif get_string('ages.11-17', language) in text:
-        return AdCampaign.AudienceAges.ALL[1]
+        return AdCampaign.AudienceAges.AGES[1]
     elif get_string('ages.18-24', language) in text:
-        return AdCampaign.AudienceAges.ALL[2]
+        return AdCampaign.AudienceAges.AGES[2]
     elif get_string('ages.25-34', language) in text:
-        return AdCampaign.AudienceAges.ALL[3]
+        return AdCampaign.AudienceAges.AGES[3]
     elif get_string('ages.35-44', language) in text:
-        return AdCampaign.AudienceAges.ALL[4]
+        return AdCampaign.AudienceAges.AGES[4]
     elif get_string('ages.45-54', language) in text:
-        return AdCampaign.AudienceAges.ALL[5]
+        return AdCampaign.AudienceAges.AGES[5]
     elif get_string('ages.55_and_older', language) in text:
-        return AdCampaign.AudienceAges.ALL[6]
+        return AdCampaign.AudienceAges.AGES[6]
+    elif get_string('ages.all', language) in text:
+        return AdCampaign.AudienceAges.ALL
     else:
         return None
 
@@ -86,6 +93,42 @@ def format_ages(ages_string: str, language: str) -> str:
     ages = [age.strip() for age in ages_string.split(',')]
     ages = [age for age in ages if age != '']
     text_ages = [from_ages_enum_value(age, language) for age in ages]
-    text_ages = [string + ', ' for string in text_ages if text_ages[-1] != string]
-    formatted_string = ''.join(text_ages)
+    text_ages_result = []
+    for age in text_ages:
+        if age != text_ages[-1]:
+            age += ', '
+        text_ages_result.append(age)
+    formatted_string = ''.join(text_ages_result)
     return formatted_string
+
+
+def budget_enum_to_text(value: str, language: str) -> str:
+    return get_string('budget.' + value, language)
+
+
+def text_to_budget_enum(text: str, language: str) -> Optional[AnyStr]:
+    if get_string('budget.small', language) in text:
+        return AdCampaign.BudgetOptions.SMALL
+    elif get_string('budget.medium', language) in text:
+        return AdCampaign.BudgetOptions.MEDIUM
+    elif get_string('budget.large', language) in text:
+        return AdCampaign.BudgetOptions.LARGE
+    elif get_string('budget.very_large', language) in text:
+        return AdCampaign.BudgetOptions.VERY_LARGE
+    else:
+        return None
+
+
+def from_coverage_to_text(coverage: tuple, language: str) -> str:
+    template = get_string('campaign.coverage', language)
+    return template.format(from_value=coverage[0],
+                           to_value=coverage[1])
+
+
+def total_ad_order(ad_order: AdCampaign, language: str):
+    template = get_string('campaign.confirmation_template')
+    return template.format(product_name=ad_order.product_name,
+                           audience=from_target_audience_enum_to_text(ad_order.target_audience, language),
+                           age=format_ages(ad_order.age_of_audience, language),
+                           coverage=from_coverage_to_text(get_coverages_by_budget(ad_order.budget), language),
+                           budget=budget_enum_to_text(ad_order.budget, language))
