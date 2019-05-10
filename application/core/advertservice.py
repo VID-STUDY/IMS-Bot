@@ -13,6 +13,19 @@ coverages_by_budget = {
 }
 
 
+def get_confirmed_orders() -> list:
+    return AdCampaign.query.\
+        filter(AdCampaign.confirmed == True).\
+        order_by(AdCampaign.id.desc())\
+        .all()
+
+
+def remove_order(order_id: int):
+    order = AdCampaign.query.get_or_404(order_id)
+    db.session.delete(order)
+    db.session.commit()
+
+
 def get_current_campaign(user_id: int) -> AdCampaign:
     """
     Get current campaign by user
