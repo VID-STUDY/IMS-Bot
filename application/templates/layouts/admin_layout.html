@@ -31,6 +31,7 @@
             </div>
         </li>
         <li {% if area == 'users' %} class="active" {% endif %}><a href="{{ url_for('admin.users') }}" class="waves-effect waves-purple"><i class="material-icons">people</i>Пользователи</a></li>
+        <li {% if area == 'orders' %} class="active" {% endif %}><a href="{{ url_for('admin.orders') }}" class="waves-effect waves-purple"><i class="material-icons">video_label</i>Заказы</a></li>
         <li {% if area == 'calls' %} class="active" {% endif %}><a href="{{ url_for('admin.calls') }}" class="waves-effect waves-purple"><i class="material-icons">ring_volume</i>Звонки</a></li>
         <li {% if area == 'channels' %} class="active" {% endif %}><a href="{{ url_for('admin.all_channels') }}" class="waves-effect waves-purple"><i class="material-icons">dvr</i>Каналы</a></li>
         <li {% if area == 'ratings' %} class="active" {% endif %}><a href="{{ url_for('admin.ratings') }}" class="waves-effect waves-purple"><i class="material-icons">assessment</i>Рейтинги</a></li>

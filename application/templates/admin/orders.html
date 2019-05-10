@@ -1,0 +1,62 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+    <div class="card-panel">
+        <h3 class="content-header">Заказы рекламных кампаний</h3>
+        <section class="order-table">
+            <div class="table-wrapper">
+                <table class="highlight striped centered">
+                    <thead>
+                        <tr>
+                            <td>Имя заказчика</td>
+                            <td>Компания заказчика</td>
+                            <td>Номер телефона</td>
+                            <td>Товар/услуга</td>
+                            <td>Целевая аудитория</td>
+                            <td>Возраст</td>
+                            <td>Бюджет</td>
+                            <td>Действия</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.user.name }}</td>
+                                <td>{{ order.user.company_name }}</td>
+                                <td>{{ order.user.phone_number }}</td>
+                                <td>{{ order.product_name }}</td>
+                                <td>{{ order.target_audience|target_audience }}</td>
+                                <td>{{ order.age_of_audience|audience_age }}</td>
+                                <td>{{ order.budget|budget }}</td>
+                                <td>
+                                    <div class="call-actions">
+                                        <button class="btn waves-effect-waves-light purple action-delete-btn"
+                                                data-delete-url="{{ url_for('admin.delete_order', order_id=order.id) }}"
+                                                data-product-name="{{ order.product_name }}"
+                                                data-company="{{ order.user.company_name }}">
+                                            <i class="material-icons white-text">delete_outline</i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% else %}
+                                <tr class="empty-table">Заказы на рекламу отсутствуют</tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <div class="modal" id="deleteConfirmationModal">
+        <div class="modal-content">
+            <h4>Подтверждение</h4>
+            <p id="modalText"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="" id="confirmedDeleteButton" class="modal-close btn-flat waves-effect waves-purple"><i class="material-icons left">delete_outline</i>Удалить</a>
+            <a href="#" class="modal-close btn-flat waves-effect waves-purple">Отмена</a>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/orders.js') }}"></script>
+{% endblock %}
