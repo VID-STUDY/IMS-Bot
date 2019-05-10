@@ -33,4 +33,28 @@
             </form>
         </section>
     </div>
+    <div class="card-panel">
+        <h3 class="content-header">Презентации каналов</h3>
+        <p class="content-caption"><strong>Внимание!</strong> При загрузке новых файлов старые удаляться</p>
+        <section class="presentation-form">
+            <form action="{{ url_for('admin.presentations') }}" method="post" enctype="multipart/form-data">
+                {{ presentation_form.hidden_tag() }}
+                <div class="file-field input-field">
+                    <div class="btn purple darken-4 white-text">
+                        <span>Выбрать</span>
+                        {{ presentation_form.presentations() }}
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input type="text" placeholder="Файлы презентаций" class="file-path">
+                    </div>
+                    {% for error in presentation_form.presentations.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-button">
+                    {{ presentation_form.submit(class='btn waves-effect waves-light') }}
+                </div>
+            </form>
+        </section>
+    </div>
 {% endblock %}

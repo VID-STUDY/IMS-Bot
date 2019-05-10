@@ -50,3 +50,8 @@ class FaqForm(FlaskForm):
     text_uz = TextAreaField('Текст на узбекском',
                             validators=[DataRequired('Укажите текст на узбекском')])
     submit = SubmitField('Сохранить')
+
+
+class PresentationsForm(FlaskForm):
+    presentations = MultipleFileField('Файлы презентаций')
+    submit = SubmitField('Сохранить')

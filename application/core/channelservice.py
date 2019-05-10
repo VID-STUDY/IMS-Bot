@@ -102,6 +102,7 @@ def update_channel(channel_id: int, name=None, price_files=None, package_offers_
             current_prices = channel.price_files.filter(PriceFile.is_package == False).all()
             for price_file in current_prices:
                 db.session.delete(price_file)
+                tools.remove_file(price_file.file_path)
             for file in price_files:
                 if file.filename == '':
                     continue
@@ -115,6 +116,7 @@ def update_channel(channel_id: int, name=None, price_files=None, package_offers_
             current_package_offers = channel.price_files.filter(PriceFile.is_package == True).all()
             for offer in current_package_offers:
                 db.session.delete(offer)
+                tools.remove_file(offer.file_path)
             for file in package_offers_files:
                 if file.filename == '':
                     continue
@@ -171,13 +173,45 @@ def remove_channel(channel_id: int):
 
 
 def get_channel_presentations():
+    """
+    All channles' presentations
+    :return: list of presentations models
+    """
     return ChannelPresentation.query.all()
 
 
 def set_telegram_id_for_presentation_file(presentation_id, telegram_id):
+    """
+    Setting up a Telegram-ID for file
+    :param presentation_id: file id
+    :param telegram_id: Telegram-ID
+    :return: void
+    """
     presentation = ChannelPresentation.query.get(presentation_id)
     presentation.telegram_id = telegram_id
     db.session.commit()
+
+
+def update_presentations(files):
+    """
+    Delete all old files and save new presntantions files
+    :param files: a list of FileStorage
+    :return: void
+    """
+    if files:
+        if not files[0].content_type == 'application/octet-stream':
+            current_presentations = get_channel_presentations()
+            for file in current_presentations:
+                tools.remove_file(file.file_path)
+            ChannelPresentation.query.delete()
+            for file in files:
+                if file.filename == '':
+                    continue
+                file_path = os.path.join(Config.UPLOAD_DIRECTORY, secure_filename(file.filename))
+                tools.save_file(file, file_path, recreate=True)
+                new_presentation = ChannelPresentation(file_path=file_path)
+                db.session.add(new_presentation)
+            db.session.commit()
 
 
 class ChannelNotFound(Exception):
