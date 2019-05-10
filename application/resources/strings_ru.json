@@ -75,5 +75,8 @@
     "budget.small": "От 2,5 до 5 млн. сум",
     "budget.medium": "От 5 до 12 млн. сум",
     "budget.large": "От 12 до 20 млн. сум",
-    "budget.very_large": "От 20 до 30 млн. сум"
+    "budget.very_large": "От 20 до 30 млн. сум",
+    "rating.welcome": "Что вас интересует?",
+    "rating.ratings": "Рейтинги каналов",
+    "rating.presentations": "Презентации каналов"
 }

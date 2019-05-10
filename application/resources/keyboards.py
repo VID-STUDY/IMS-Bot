@@ -77,6 +77,10 @@ _confirmation_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 _confirmation_ru.add(get_string('campaign.confirm'))
 _confirmation_ru.add(get_string('go_back'), get_string('main_menu'))
 _keyboards_ru['campaign.confirmation'] = _confirmation_ru
+_rating_ru = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+_rating_ru.add(get_string('rating.ratings'), get_string('rating.presentations'), get_string('main_menu'))
+_keyboards_ru['rating'] = _rating_ru
+
 
 # Initialization uzbek keybords
 _welcome_phone_number_uz = ReplyKeyboardMarkup(resize_keyboard=True)
