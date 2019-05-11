@@ -30,7 +30,8 @@ def empty_message(message: telebot.types.Message):
     chat_id = message.chat.id
     user_id = message.from_user.id
     language = userservice.get_user_language(user_id)
-    main_menu_message = strings.get_string('main_menu.choose_option', language)
-    main_menu_keyboard = keyboards.get_keyboard('main_menu', language)
-    telegram_bot.send_message(chat_id, main_menu_message, reply_markup=main_menu_keyboard)
-    return
+    if userservice.is_user_registered(user_id):
+        main_menu_message = strings.get_string('main_menu.choose_option', language)
+        main_menu_keyboard = keyboards.get_keyboard('main_menu', language)
+        telegram_bot.send_message(chat_id, main_menu_message, reply_markup=main_menu_keyboard)
+    
