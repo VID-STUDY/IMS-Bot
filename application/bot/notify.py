@@ -35,4 +35,10 @@ def notify_call(call: Call):
 
 
 def notify_ad_campaign(ad_campaign: AdCampaign):
-    pass
+    notify_chats = notifyservice.get_all_notify_chats()
+    notify_message = strings.from_notify_order(ad_campaign)
+    for chat in notify_chats:
+        try:
+            bot.send_message(chat.id, notify_message, parse_mode='Markdown')
+        except ApiException:
+            pass

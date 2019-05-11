@@ -49,6 +49,24 @@ def from_notify_call(call: Call):
                            time=call.time)
 
 
+def from_notify_order(order: AdCampaign):
+    template = "*Новый заказ на рекламную компанию!*\n\n"\
+               "*Имя заказчика:* {name}\n"\
+               "*Номер телефона:* {phone_number}\n"\
+               "*Компания заказчика:* {company}\n"\
+               "*Товар/услуга:* {product}\n"\
+               "*Целевая аудитория:* {audience}\n"\
+               "*Возраст аудитории:* {age}\n"\
+               "*Бюджет:* {budget}"
+    return template.format(name=order.user.name,
+                           phone_number=order.user.phone_number,
+                           company=order.user.company_name,
+                           product=order.product_name,
+                           audience=from_target_audience_enum_to_text(order.target_audience, 'ru'),
+                           age=format_ages(order.age_of_audience, 'ru'),
+                           budget=budget_enum_to_text(order.budget, 'ru'))
+
+
 def to_target_audience_enum(text: str, language: str) -> Optional[AnyStr]:
     if get_string('campaign.male', language) == text:
         return AdCampaign.TargetAudiences.MALE
