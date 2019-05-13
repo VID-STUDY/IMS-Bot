@@ -20,14 +20,11 @@ def get_string(key, language='ru') -> str:
 
 
 def from_rating(rating: Rating, language) -> str:
-    template = "{date}\n\n{text}"
     if language == 'uz':
         text = rating.text_uz
     else:
         text = rating.text_ru
-    return template.format(date=get_string('ratings.ratings_for_date', language)
-                           .format(rating.date.strftime('%d.%m.%Y')),
-                           text=text)
+    return text
 
 
 def from_faq(faq: FAQ, language: str) -> str:
