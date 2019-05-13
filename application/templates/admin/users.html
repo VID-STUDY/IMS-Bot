@@ -23,6 +23,7 @@
                         <th>Юзернэйм</th>
                         <th>Номер телефона</th>
                         <th>Название компании</th>
+                        <th>Дата регистрации</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +54,13 @@
                             <td>
                                 {% if user.company_name %}
                                     {{ user.company_name }}
+                                {% else %}
+                                    Не указано
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.registered_at %}
+                                    {{ user.registered_at|datetime(convert_from_utc=True) }}
                                 {% else %}
                                     Не указано
                                 {% endif %}
