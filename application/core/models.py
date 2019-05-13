@@ -13,7 +13,7 @@ class User(db.Model):
     username = db.Column(db.String(100))
     phone_number = db.Column(db.String(15))
     language = db.Column(db.String(5))
-    company_name = db.Column(db.String)
+    company_name = db.Column(db.String(100))
     calls = db.relationship('Call', lazy='dynamic', backref='user')
     campaigns = db.relationship('AdCampaign', lazy='dynamic', backref='user')
 
@@ -63,8 +63,8 @@ class PriceFile(db.Model):
     """
     __tablename__ = 'price_files'
     id = db.Column(db.Integer, primary_key=True)
-    telegram_id = db.Column(db.String)
-    file_path = db.Column(db.String)
+    telegram_id = db.Column(db.String(150))
+    file_path = db.Column(db.String(150))
     channel_id = db.Column(db.Integer, db.ForeignKey('tv_channels.id'))
     is_package = db.Column(db.Boolean, default=False)
 
@@ -76,9 +76,9 @@ class AdCampaign(db.Model):
     __tablename__ = 'ad_campaigns'
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(150))
-    target_audience = db.Column(db.String)
-    age_of_audience = db.Column(db.String)
-    budget = db.Column(db.String)
+    target_audience = db.Column(db.String(50))
+    age_of_audience = db.Column(db.String(100))
+    budget = db.Column(db.String(50))
     confirmed = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
@@ -100,22 +100,21 @@ class AdCampaign(db.Model):
 
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date)
-    text_ru = db.Column(db.String)
-    text_uz = db.Column(db.String)
+    text_ru = db.Column(db.String(6000))
+    text_uz = db.Column(db.String(6000))
 
 
 class ChannelPresentation(db.Model):
     __tablename__ = 'channel_presentations'
     id = db.Column(db.Integer, primary_key=True)
-    telegram_id = db.Column(db.String)
-    file_path = db.Column(db.String)
+    telegram_id = db.Column(db.String(150))
+    file_path = db.Column(db.String(150))
 
 
 class FAQ(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    text_ru = db.Column(db.String)
-    text_uz = db.Column(db.String)
+    text_ru = db.Column(db.String(6000))
+    text_uz = db.Column(db.String(6000))
 
 
 class NotifyChat(db.Model):
