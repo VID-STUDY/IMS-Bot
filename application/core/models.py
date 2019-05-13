@@ -14,6 +14,7 @@ class User(db.Model):
     phone_number = db.Column(db.String(15))
     language = db.Column(db.String(5))
     company_name = db.Column(db.String(100))
+    registered_ad = db.Column(db.DateTime)
     calls = db.relationship('Call', lazy='dynamic', backref='user')
     campaigns = db.relationship('AdCampaign', lazy='dynamic', backref='user')
 
@@ -80,6 +81,7 @@ class AdCampaign(db.Model):
     age_of_audience = db.Column(db.String(100))
     budget = db.Column(db.String(50))
     confirmed = db.Column(db.Boolean, default=False)
+    confirmed_at = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     class TargetAudiences:
