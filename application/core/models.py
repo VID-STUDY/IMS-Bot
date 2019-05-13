@@ -14,7 +14,7 @@ class User(db.Model):
     phone_number = db.Column(db.String(15))
     language = db.Column(db.String(5))
     company_name = db.Column(db.String(100))
-    registered_ad = db.Column(db.DateTime)
+    registered_at = db.Column(db.DateTime)
     calls = db.relationship('Call', lazy='dynamic', backref='user')
     campaigns = db.relationship('AdCampaign', lazy='dynamic', backref='user')
 
