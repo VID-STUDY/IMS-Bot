@@ -27,7 +27,7 @@
                                     <div class="call-actions">
                                         <button class="btn waves-effect-waves-light purple action-delete-btn"
                                                 data-delete-url="{{ url_for('admin.delete_call', call_id=call.id) }}"
-                                                data-phone-number="{{ call.phone_xnumber }}"
+                                                data-phone-number="{{ call.phone_number }}"
                                                 data-call-date="{{ call.confirmation_date|datetime(convert_from_utc=True) }}">
                                             <i class="material-icons white-text">delete_outline</i>
                                         </button>
