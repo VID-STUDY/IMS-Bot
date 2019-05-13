@@ -11,15 +11,13 @@ def ratings():
     rating_form = RatingForm()
     presentations_form = PresentationsForm()
     if rating_form.validate_on_submit():
-        date = rating_form.date.data
         text_ru = rating_form.text_ru.data
         text_uz = rating_form.text_uz.data
-        ratingservice.save_rating(date, text_ru, text_uz)
+        ratingservice.save_rating(text_ru, text_uz)
         flash('Рейтинг обновлён', category='success')
         return redirect(url_for('admin.ratings'))
     rating = ratingservice.get_rating()
     if rating:
-        rating_form.date.data = rating.date.strftime('%d.%m.%Y')
         rating_form.text_ru.data = rating.text_ru
         rating_form.text_uz.data = rating.text_uz
     return render_template('admin/rating.html', title='Рейтинги',

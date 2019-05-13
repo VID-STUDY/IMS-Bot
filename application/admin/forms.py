@@ -36,7 +36,6 @@ class NewChannelForm(FlaskForm):
 
 
 class RatingForm(FlaskForm):
-    date = StringField('Рейтинг за', validators=[DataRequired('Установите дату')])
     text_ru = TextAreaField('Текст на русском',
                             validators=[DataRequired('Укажите текст на русском')])
     text_uz = TextAreaField('Текст на узбекском',

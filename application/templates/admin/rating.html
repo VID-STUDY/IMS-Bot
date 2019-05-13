@@ -7,13 +7,6 @@
             <form action="" method="post">
                 {{ form.hidden_tag() }}
                 <div class="input-field">
-                    {{ form.date(class='datepicker') }}
-                    {{ form.date.label }}
-                    {% for error in form.date.errors %}
-                        <span class="helper-text red-text">{{ error }}</span>
-                    {% endfor %}
-                </div>
-                <div class="input-field">
                     {{ form.text_ru(class='materialize-textarea') }}
                     {{ form.text_ru.label }}
                     {% for error in form.text_ru.errors %}
