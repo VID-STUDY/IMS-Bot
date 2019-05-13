@@ -3,6 +3,7 @@ from typing import Optional, Tuple
 from application import db
 from application.core.models import AdCampaign
 from application.core import userservice
+from datetime import datetime
 
 
 coverages_by_budget = {
@@ -138,6 +139,7 @@ def confirm_campaign(user_id: int) -> AdCampaign:
     """
     current_campaign = get_current_campaign(user_id)
     current_campaign.confirmed = True
+    current_campaign.confirmed_at = datetime.utcnow()
     db.session.commit()
     return current_campaign
 

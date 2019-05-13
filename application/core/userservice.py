@@ -1,5 +1,6 @@
 from application import db
 from application.core.models import User, AdminUser
+from datetime import datetime
 
 
 def is_user_exists(user_id: int):
@@ -33,6 +34,7 @@ def set_user_language(user_id: int, language: str):
 def set_user_company(user_id: int, company_name: str):
     user = User.query.get(user_id)
     user.company_name = company_name
+    user.registered_at = datetime.utcnow()
     db.session.commit()
 
 
