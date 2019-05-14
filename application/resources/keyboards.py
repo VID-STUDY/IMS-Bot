@@ -122,6 +122,32 @@ _call_time_keyboard_uz.add(get_string('call.in_5_minutes', 'uz'),
                            get_string('call.in_10_minutes', 'uz'),
                            get_string('go_back', 'uz'))
 _keyboards_uz['call.time'] = _call_time_keyboard_uz
+_target_audience_uz = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_target_audience_uz.add(from_target_audience_enum_to_text(AdCampaign.TargetAudiences.MALE, 'uz'),
+                        from_target_audience_enum_to_text(AdCampaign.TargetAudiences.FEMALE, 'uz'),
+                        from_target_audience_enum_to_text(AdCampaign.TargetAudiences.MALE_AND_FEMALE, 'uz'))
+_target_audience_uz.add(get_string('go_back', 'uz'), get_string('main_menu', 'uz'))
+_keyboards_uz['campaign.target_audience'] = _target_audience_uz
+_budget_uz = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_budget_uz.add(budget_enum_to_text(AdCampaign.BudgetOptions.SMALL, 'uz'))
+_budget_uz.add(budget_enum_to_text(AdCampaign.BudgetOptions.MEDIUM, 'uz'))
+_budget_uz.add(budget_enum_to_text(AdCampaign.BudgetOptions.LARGE, 'uz'))
+_budget_uz.add(budget_enum_to_text(AdCampaign.BudgetOptions.VERY_LARGE, 'uz'))
+_budget_uz.add(get_string('go_back', 'uz'), get_string('main_menu', 'uz'))
+_keyboards_uz['campaign.budget'] = _budget_uz
+_coverage_uz = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_coverage_uz.add(get_string('campaign.show', 'uz'))
+_coverage_uz.add(get_string('go_back', 'uz'), get_string('main_menu', 'uz'))
+_keyboards_uz['campaign.coverage'] = _coverage_uz
+_confirmation_uz = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+_confirmation_uz.add(get_string('campaign.confirm', 'uz'))
+_confirmation_uz.add(get_string('go_back', 'uz'), get_string('main_menu', 'uz'))
+_keyboards_uz['campaign.confirmation'] = _confirmation_uz
+_rating_uz = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+_rating_uz.add(get_string('rating.ratings', 'uz'),
+               get_string('rating.presentations', 'uz'),
+               get_string('main_menu', 'uz'))
+_keyboards_uz['rating'] = _rating_uz
 
 
 def get_keyboard(key, language='ru'):

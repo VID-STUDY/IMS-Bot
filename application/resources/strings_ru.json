@@ -59,7 +59,7 @@
     "campaign.confirm": "Отправить заявку ✅",
     "campaign.show": "Просмотреть заявку",
     "campaign.cancel": "Отмена \uD83D\uDEAB",
-    "campaign.confirmation_template": "Ваша заявка:\n\n*Наименование продукта/услуги:*\n{product_name}\n*Аудитория:*\n{audience}\n*Возрастные группы:*\n{age}\n*Охват:\n*{coverage}\n*Бюджет:*\n{budget}",
+    "campaign.confirmation_template": "*Ваша заявка:*\n\n*Наименование продукта/услуги:*\n{product_name}\n*Аудитория:*\n{audience}\n*Возрастные группы:*\n{age}\n*Охват:\n*{coverage}\n*Бюджет:*\n{budget}",
     "campaign.success": "Спасибо за заявку! Наши менеджеры в ближайшее время свяжутся с Вами",
     "go_back": "⬅ Назад",
     "main_menu": "⬅ Главное меню",

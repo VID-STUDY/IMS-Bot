@@ -141,7 +141,7 @@ def from_coverage_to_text(coverage: tuple, language: str) -> str:
 
 
 def total_ad_order(ad_order: AdCampaign, language: str):
-    template = get_string('campaign.confirmation_template')
+    template = get_string('campaign.confirmation_template', language)
     return template.format(product_name=ad_order.product_name,
                            audience=from_target_audience_enum_to_text(ad_order.target_audience, language),
                            age=format_ages(ad_order.age_of_audience, language),
