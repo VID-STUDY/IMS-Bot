@@ -29,4 +29,4 @@ def faq_handler(message: Message):
         bot.send_message(chat_id, empty_msg)
         return
     faq_message = strings.from_faq(faq, language)
-    bot.send_message(chat_id, faq_message, parse_mode='Markdown')
+    bot.send_message(chat_id, faq_message, parse_mode='HTML')

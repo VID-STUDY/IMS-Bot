@@ -56,7 +56,7 @@ def rating_processor(message: Message):
             bot.register_next_step_handler_by_chat_id(chat_id, rating_processor)
             return
         rating_message = strings.from_rating(rating, language)
-        bot.send_message(chat_id, rating_message, parse_mode='Markdown')
+        bot.send_message(chat_id, rating_message, parse_mode='HTML')
         bot.register_next_step_handler_by_chat_id(chat_id, rating_processor)
     elif strings.get_string('rating.presentations', language) in message.text:
         presentations = channelservice.get_channel_presentations()
