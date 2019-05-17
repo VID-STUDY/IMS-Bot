@@ -2,16 +2,36 @@
 {% block content %}
     <div class="card-panel">
         <h3 class="content-header">Рейтинги каналов</h3>
-        <p class="content-caption">Редактирование рейтингов. Для стилизации текста используйте следующие обозначения: *<b>Полужирный</b>*, _<i>курсивный</i>_</p>
+        <p class="content-caption">Редактирование рейтингов. Для стилизации текста установите курсор в нужном месте или выделите текст для форматирования и нажмите соответсвующие кнопки</p>
         <section class="faq-form">
             <form action="" method="post">
                 {{ form.hidden_tag() }}
+                <div class="format-buttons">
+                    <div class="format-option">
+                        <button class="btn-flat waves-effect waves-purple" type="button" id="boldButtonRu"><i class="material-icons">format_bold</i></button>
+                        <p>Полужирный</p>
+                    </div>
+                    <div class="format-option">
+                        <button class="btn-flat waves-effect waves-purple" type="button" id="italicButtonRu"><i class="material-icons">format_italic</i></button>
+                        <p>Курсив</p>
+                    </div>
+                </div>
                 <div class="input-field">
                     {{ form.text_ru(class='materialize-textarea') }}
                     {{ form.text_ru.label }}
                     {% for error in form.text_ru.errors %}
                         <span class="helper-text red-text">{{ error }}</span>
                     {% endfor %}
+                </div>
+                <div class="format-buttons">
+                    <div class="format-option">
+                        <button class="btn-flat waves-effect waves-purple" type="button" id="boldButtonUz"><i class="material-icons">format_bold</i></button>
+                        <p>Полужирный</p>
+                    </div>
+                    <div class="format-option">
+                        <button class="btn-flat waves-effect waves-purple" type="button" id="italicButtonUz"><i class="material-icons">format_italic</i></button>
+                        <p>Курсив</p>
+                    </div>
                 </div>
                 <div class="input-field">
                     {{ form.text_uz(class='materialize-textarea') }}
@@ -50,4 +70,7 @@
             </form>
         </section>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
 {% endblock %}
