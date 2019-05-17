@@ -34,7 +34,7 @@ def process_phone_number(message):
     def error():
         error_msg = strings.get_string('welcome.phone_number', language)
         telegram_bot.send_message(chat_id, error_msg, parse_mode='HTML')
-        telegram_bot.register_next_step_handler_by_chat_id(chat_id, process_user_language)
+        telegram_bot.register_next_step_handler_by_chat_id(chat_id, process_phone_number)
 
     if message.contact is not None:
         userservice.set_user_phone_number(user_id, message.contact.phone_number)
