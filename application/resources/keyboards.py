@@ -173,7 +173,13 @@ def from_ages(language:str, used_ages: str = None) -> ReplyKeyboardMarkup:
             user_ages = [age.strip() for age in used_ages.split(',')]
             current_ages = [age for age in user_ages if age != '']
             unused_ages = list(set(AdCampaign.AudienceAges.AGES) - set(current_ages))
+            if '6-10' in unused_ages:
+                index = unused_ages.index('6-10')
+                unused_ages[index] = '06-10'
             unused_ages.sort()
+            if '06-10' in unused_ages:
+                index = unused_ages.index('06-10')
+                unused_ages[index] = '6-10'
         else:
             unused_ages = []
     else:
