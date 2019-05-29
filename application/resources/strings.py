@@ -47,7 +47,7 @@ def from_notify_call(call: Call):
 
 
 def from_notify_order(order: AdCampaign):
-    template = "*Новый заказ на рекламную компанию!*\n\n"\
+    template = "*Новый заказ на рекламную кампанию!*\n\n"\
                "*Имя заказчика:* {name}\n"\
                "*Номер телефона:* {phone_number}\n"\
                "*Компания заказчика:* {company}\n"\
