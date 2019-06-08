@@ -19,6 +19,9 @@ def save_file(file, path, recreate=False):
     :param recreate: If file exists remove old version, save new version
     :return: void
     """
+    dirname = os.path.dirname(path)
+    if not os.path.exists(dirname):
+        os.mkdir(dirname)
     if os.path.exists(path):
         if recreate:
             os.remove(path)
