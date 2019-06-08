@@ -6,8 +6,8 @@ from typing import Optional, AnyStr
 
 _basedir = os.path.abspath(os.path.dirname(__file__))
 
-_strings_ru = json.loads(open(os.path.join(_basedir, 'strings_ru.json'), 'r').read())
-_strings_uz = json.loads(open(os.path.join(_basedir, 'strings_uz.json'), 'r').read())
+_strings_ru = json.loads(open(os.path.join(_basedir, 'strings_ru.json'), 'r', encoding='utf8').read())
+_strings_uz = json.loads(open(os.path.join(_basedir, 'strings_uz.json'), 'r', encoding='utf8').read())
 
 
 def get_string(key, language='ru') -> str:
