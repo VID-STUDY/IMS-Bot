@@ -55,8 +55,13 @@ def rating_processor(message: Message):
             bot.send_message(chat_id, empty_message)
             bot.register_next_step_handler_by_chat_id(chat_id, rating_processor)
             return
-        rating_message = strings.from_rating(rating, language)
-        bot.send_message(chat_id, rating_message, parse_mode='HTML')
+        if rating.image_id:
+            bot.send_photo(chat_id, rating.image_id)
+        else:
+            bot.send_chat_action(chat_id, 'upload_photo')
+            sent_file = bot.send_photo(chat_id, open(rating.image_path, 'rb'))
+            tg_id = sent_file.photo[-1].file_id
+            ratingservice.set_rating_telegram_id(tg_id)
         bot.register_next_step_handler_by_chat_id(chat_id, rating_processor)
     elif strings.get_string('rating.presentations', language) in message.text:
         presentations = channelservice.get_channel_presentations()
