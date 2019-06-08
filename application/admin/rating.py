@@ -3,6 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required
 from application.admin.forms import RatingForm, PresentationsForm
 from application.core import ratingservice, channelservice
+import os
 
 
 @login_required
@@ -11,15 +12,16 @@ def ratings():
     rating_form = RatingForm()
     presentations_form = PresentationsForm()
     if rating_form.validate_on_submit():
-        text_ru = rating_form.text_ru.data
-        text_uz = rating_form.text_uz.data
-        ratingservice.save_rating(text_ru, text_uz)
+        image = rating_form.image.data
+        ratingservice.save_rating(image)
         flash('Рейтинг обновлён', category='success')
+        flash('Рекомендуется перейти в бота и запросить у него новые файлы, '
+              'чтобы в последующем он отправлял их быстрее', category='warning')
         return redirect(url_for('admin.ratings'))
     rating = ratingservice.get_rating()
     if rating:
-        rating_form.text_ru.data = rating.text_ru
-        rating_form.text_uz.data = rating.text_uz
+        basename = os.path.basename(rating.image_path)
+        rating_form.file_path = basename
     return render_template('admin/rating.html', title='Рейтинги',
                            form=rating_form, area='ratings',
                            presentation_form=presentations_form)

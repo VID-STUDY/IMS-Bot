@@ -1,8 +1,14 @@
 from application import db
 from application.core.models import Rating
+from application.utils import tools
+from werkzeug.utils import secure_filename
+from config import Config
+import os
+
+from typing import Optional
 
 
-def get_rating() -> Rating or None:
+def get_rating() -> Optional[Rating]:
     """
     Get last rating
     :return: Rating or None, if rating doesn't exist
@@ -14,18 +20,26 @@ def get_rating() -> Rating or None:
     return rating
 
 
-def save_rating(text_ru, text_uz):
+def save_rating(image):
     """
     Update or create a new rating
-    :param text_ru: Text on russian
-    :param text_uz: Text on uzbek
+    :param image: image file
     :return: void
     """
     rating = get_rating()
+    file_path = os.path.join(Config.UPLOAD_DIRECTORY, secure_filename(image.filename))
+    tools.save_file(image, file_path, recreate=True)
     if rating:
-        rating.text_ru = text_ru
-        rating.text_uz = text_uz
+        rating.image_id = None
+        tools.remove_file(rating.image_path)
+        rating.image_path = file_path
     else:
-        rating = Rating(text_ru=text_ru, text_uz=text_uz)
+        rating = Rating(image_path=file_path)
         db.session.add(rating)
+    db.session.commit()
+
+
+def set_rating_telegram_id(telegram_id):
+    rating = get_rating()
+    rating.image_id = telegram_id
     db.session.commit()

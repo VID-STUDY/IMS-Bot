@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, MultipleFileField, ValidationError, TextAreaField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, SubmitField, MultipleFileField, ValidationError, TextAreaField, FileField
+from wtforms.validators import DataRequired
 from flask_wtf.file import FileAllowed
 from application.core.models import TVChannel
 
@@ -36,11 +36,10 @@ class NewChannelForm(FlaskForm):
 
 
 class RatingForm(FlaskForm):
-    text_ru = TextAreaField('Текст на русском',
-                            validators=[DataRequired('Укажите текст на русском')])
-    text_uz = TextAreaField('Текст на узбекском',
-                            validators=[DataRequired('Укажите текст на узбекском')])
+    image = FileField('Изображениее', validators=[DataRequired('Загрузите изображение рейтингов'),
+                                                  FileAllowed(['jpg', 'png'], message="Доступны только изображения")])
     submit = SubmitField('Сохранить')
+    file_path = None
 
 
 class FaqForm(FlaskForm):
@@ -52,5 +51,5 @@ class FaqForm(FlaskForm):
 
 
 class PresentationsForm(FlaskForm):
-    presentations = MultipleFileField('Файлы презентаций')
+    presentations = MultipleFileField('Файлы презентаций', validators=[DataRequired('Выберите файлы презентаций')])
     submit = SubmitField('Сохранить')
