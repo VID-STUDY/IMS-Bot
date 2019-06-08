@@ -20,8 +20,9 @@ def ratings():
         return redirect(url_for('admin.ratings'))
     rating = ratingservice.get_rating()
     if rating:
-        basename = os.path.basename(rating.image_path)
-        rating_form.file_path = basename
+        if rating.image_path:
+            basename = os.path.basename(rating.image_path)
+            rating_form.file_path = basename
     return render_template('admin/rating.html', title='Рейтинги',
                            form=rating_form, area='ratings',
                            presentation_form=presentations_form)

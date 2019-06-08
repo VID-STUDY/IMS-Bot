@@ -31,7 +31,8 @@ def save_rating(image):
     tools.save_file(image, file_path, recreate=True)
     if rating:
         rating.image_id = None
-        tools.remove_file(rating.image_path)
+        if rating.image_path:
+            tools.remove_file(rating.image_path)
         rating.image_path = file_path
     else:
         rating = Rating(image_path=file_path)
