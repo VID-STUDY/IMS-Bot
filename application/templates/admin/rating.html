@@ -2,47 +2,25 @@
 {% block content %}
     <div class="card-panel">
         <h3 class="content-header">Рейтинги каналов</h3>
-        <p class="content-caption">Редактирование рейтингов. Для стилизации текста установите курсор в нужном месте или выделите текст для форматирования и нажмите соответсвующие кнопки</p>
-        <section class="faq-form">
-            <form action="" method="post">
+        <section class="rating-form">
+            <form action="" method="post" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
-                <div class="format-buttons">
-                    <div class="format-option">
-                        <button class="btn-flat waves-effect waves-purple" type="button" id="boldButtonRu"><i class="material-icons">format_bold</i></button>
-                        <p>Полужирный</p>
+                <div class="file-field input-field">
+                    <div class="btn purple darken-4 white-text">
+                        <span>Выбрать</span>
+                        {{ form.image() }}
                     </div>
-                    <div class="format-option">
-                        <button class="btn-flat waves-effect waves-purple" type="button" id="italicButtonRu"><i class="material-icons">format_italic</i></button>
-                        <p>Курсив</p>
+                    <div class="file-path-wrapper">
+                        <input type="text" placeholder="Изображение" {% if form.file_path %} value="{{ form.file_path }}" {% endif %} class="file-path">
                     </div>
-                </div>
-                <div class="input-field">
-                    {{ form.text_ru(class='materialize-textarea') }}
-                    {{ form.text_ru.label }}
-                    {% for error in form.text_ru.errors %}
+                    <span class="helper-text">Разрешённые файлы: jpg, png</span>
+                    {% for error in form.image.errors %}
                         <span class="helper-text red-text">{{ error }}</span>
                     {% endfor %}
                 </div>
-                <div class="format-buttons">
-                    <div class="format-option">
-                        <button class="btn-flat waves-effect waves-purple" type="button" id="boldButtonUz"><i class="material-icons">format_bold</i></button>
-                        <p>Полужирный</p>
-                    </div>
-                    <div class="format-option">
-                        <button class="btn-flat waves-effect waves-purple" type="button" id="italicButtonUz"><i class="material-icons">format_italic</i></button>
-                        <p>Курсив</p>
-                    </div>
-                </div>
-                <div class="input-field">
-                    {{ form.text_uz(class='materialize-textarea') }}
-                    {{ form.text_uz.label }}
-                    {% for error in form.text_uz.errors %}
-                        <span class="helper-text red-text">{{ error }}</span>
-                    {% endfor %}
-                </div>
-                <div class="form-button">
-                    {{ form.submit(class='btn waves-effect waves-light') }}
-                </div>
+            <div class="form-button">
+                {{ form.submit(class='btn waves-effect waves-light') }}
+            </div>
             </form>
         </section>
     </div>
