@@ -104,8 +104,15 @@ class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text_ru = db.Column(db.String(6000))
     text_uz = db.Column(db.String(6000))
+    images = db.relationship('RatingImage', lazy='dynamic', cascade='all,delete')
+
+
+class RatingImage(db.Model):
+    __tablename__ = 'rating_images'
+    id = db.Column(db.Integer, primary_key=True)
     image_path = db.Column(db.String(120))
     image_id = db.Column(db.String(120))
+    rating_id = db.Column(db.Integer, db.ForeignKey('rating.id'))
 
 
 class ChannelPresentation(db.Model):
