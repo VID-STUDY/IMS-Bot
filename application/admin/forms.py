@@ -36,7 +36,7 @@ class NewChannelForm(FlaskForm):
 
 
 class RatingForm(FlaskForm):
-    image = FileField('Изображениее', validators=[DataRequired('Загрузите изображение рейтингов'),
+    image = MultipleFileField('Изображениее', validators=[DataRequired('Загрузите изображение рейтингов'),
                                                   FileAllowed(['jpg', 'png'], message="Доступны только изображения")])
     submit = SubmitField('Сохранить')
     file_path = None
