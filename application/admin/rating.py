@@ -12,8 +12,8 @@ def ratings():
     rating_form = RatingForm()
     presentations_form = PresentationsForm()
     if rating_form.validate_on_submit():
-        image = rating_form.image.data
-        ratingservice.save_rating(image)
+        images = request.files.getlist('image')
+        ratingservice.save_rating(images)
         flash('Рейтинг обновлён', category='success')
         flash('Рекомендуется перейти в бота и запросить у него новые файлы, '
               'чтобы в последующем он отправлял их быстрее', category='warning')
