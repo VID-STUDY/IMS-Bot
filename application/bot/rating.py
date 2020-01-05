@@ -50,18 +50,20 @@ def rating_processor(message: Message):
         _to_main_menu(chat_id, language)
     elif strings.get_string('rating.ratings', language) in message.text:
         rating = ratingservice.get_rating()
-        if not rating:
+        if rating and rating.images.count() > 0:
+            for image in rating.images.all():
+                if image.image_id:
+                    bot.send_photo(chat_id, image.image_id)
+                else:
+                    bot.send_chat_action(chat_id, 'upload_photo')
+                    sent_file = bot.send_photo(chat_id, open(image.image_path, 'rb'))
+                    tg_id = sent_file.photo[-1].file_id
+                    ratingservice.set_rating_telegram_id(image, tg_id)
+        else:
             empty_message = strings.get_string('ratings.empty', language)
             bot.send_message(chat_id, empty_message)
             bot.register_next_step_handler_by_chat_id(chat_id, rating_processor)
             return
-        if rating.image_id:
-            bot.send_photo(chat_id, rating.image_id)
-        else:
-            bot.send_chat_action(chat_id, 'upload_photo')
-            sent_file = bot.send_photo(chat_id, open(rating.image_path, 'rb'))
-            tg_id = sent_file.photo[-1].file_id
-            ratingservice.set_rating_telegram_id(tg_id)
         bot.register_next_step_handler_by_chat_id(chat_id, rating_processor)
     elif strings.get_string('rating.presentations', language) in message.text:
         presentations = channelservice.get_channel_presentations()
